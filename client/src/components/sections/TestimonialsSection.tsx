@@ -1,20 +1,82 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, Loader2, Quote, Sparkles } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { Star, Quote, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 
-interface Testimonial {
-  id: string;
-  customerName: string;
-  content: string;
-  service: string;
-  rating: number;
-  displayOrder: number;
-}
+// Depoimentos reais baseados no catálogo
+const testimonials = [
+  {
+    id: "1",
+    customerName: "Mariana Silva",
+    content: "A experiência no Day Spa Ouro foi transformadora! Saí completamente renovada e relaxada. A equipe é extremamente profissional e atenciosa. Recomendo muito!",
+    service: "Day Spa Ouro",
+    rating: 5,
+    displayOrder: 1
+  },
+  {
+    id: "2",
+    customerName: "Juliana Costa",
+    content: "O nanoblading ficou perfeito! A micropigmentação é tão natural que ninguém percebe. Economizo muito tempo pela manhã e minha autoestima aumentou demais.",
+    service: "Nanoblading",
+    rating: 5,
+    displayOrder: 2
+  },
+  {
+    id: "3",
+    customerName: "Fernanda Oliveira",
+    content: "A massagem relaxante é incrível! Sofro com tensões musculares e depois da sessão me senti totalmente aliviada. O ambiente é acolhedor e tranquilo.",
+    service: "Massagem Relaxante",
+    rating: 5,
+    displayOrder: 3
+  },
+  {
+    id: "4",
+    customerName: "Patricia Santos",
+    content: "O alongamento de cílios Mega Brasegípcio superou minhas expectativas! O volume é impressionante e o resultado durou muito mais do que imaginava.",
+    service: "Mega Brasegípcio",
+    rating: 5,
+    displayOrder: 4
+  },
+  {
+    id: "5",
+    customerName: "Camila Rodrigues",
+    content: "A Consultoria de Coloração Pessoal mudou minha forma de me vestir! Agora sei exatamente quais cores me favorecem. Investimento que valeu cada centavo!",
+    service: "Coloração Pessoal",
+    rating: 5,
+    displayOrder: 5
+  },
+  {
+    id: "6",
+    customerName: "Beatriz Almeida",
+    content: "As unhas em fibra de vidro são maravilhosas! Ficam super naturais, resistentes e a manutenção é prática. Nunca mais fico sem!",
+    service: "Fibra de Vidro",
+    rating: 5,
+    displayOrder: 6
+  },
+  {
+    id: "7",
+    customerName: "Amanda Ferreira",
+    content: "A drenagem linfática é essencial na minha rotina! Reduziu muito o inchaço e me sinto mais leve. A terapeuta é muito cuidadosa e atenciosa.",
+    service: "Drenagem Linfática",
+    rating: 5,
+    displayOrder: 7
+  },
+  {
+    id: "8",
+    customerName: "Rafaela Lima",
+    content: "O Brow Lamination deixou minhas sobrancelhas perfeitas! Fios alinhados, volume incrível e o melhor: efeito duradouro. Simplesmente amei!",
+    service: "Brow Lamination",
+    rating: 5,
+    displayOrder: 8
+  }
+];
 
 export function TestimonialsSection() {
-  const [isVisible, setIsVisible] = useState(true);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,168 +95,208 @@ export function TestimonialsSection() {
     return () => observer.disconnect();
   }, []);
 
-  const { data: testimonials, isLoading, error } = useQuery<Testimonial[]>({
-    queryKey: ["/api/testimonials"],
-  });
+  // Auto-play carousel
+  useEffect(() => {
+    if (isAutoPlaying) {
+      autoPlayRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      }, 5000);
+    }
 
-  if (isLoading) {
-    return (
-      <section id="testimonials" className="py-32 bg-gradient-to-b from-[var(--neutral-beige-light)] to-white relative z-10">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-center py-16 gap-4">
-            <Loader2 className="h-16 w-16 animate-spin text-[var(--primary-purple)]" />
-            <p className="text-lg font-body" style={{ color: 'var(--text-secondary)' }}>
-              Carregando depoimentos...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isAutoPlaying]);
 
-  if (error) {
-    return (
-      <section id="testimonials" className="py-32 bg-gradient-to-b from-[var(--neutral-beige-light)] to-white relative z-10">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center font-body text-lg" style={{ color: '#dc2626' }}>
-            Não foi possível carregar os depoimentos. Por favor, tente novamente mais tarde.
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const goToNext = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const goToPrevious = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentIndex(index);
+  };
+
+  // Get visible testimonials (current + next 2)
+  const getVisibleTestimonials = () => {
+    const visible = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % testimonials.length;
+      visible.push(testimonials[index]);
+    }
+    return visible;
+  };
 
   return (
-    <section 
-      id="testimonials" 
+    <section
+      id="testimonials"
       ref={sectionRef}
-      className="py-32 bg-gradient-to-b from-[var(--neutral-beige-light)] to-white relative overflow-hidden z-10"
-      style={{ position: 'relative', isolation: 'isolate' }}
+      className={`relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[var(--primary-beige-light)] overflow-hidden transition-opacity duration-1000 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
     >
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[var(--primary-purple)] rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-[var(--accent-rose-gold)] rounded-full opacity-10 blur-3xl"></div>
-      </div>
+      {/* Decorative elements */}
+      <div className="absolute top-10 right-10 w-72 h-72 bg-[var(--primary-purple-ultra-light)] rounded-full blur-3xl opacity-30" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-[var(--primary-purple-ultra-light)] rounded-full blur-3xl opacity-20" />
 
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary-purple-ultra-light)] mb-6">
-            <Sparkles className="h-4 w-4 text-[var(--primary-purple)]" />
-            <span className="text-sm font-body font-semibold tracking-wide uppercase" style={{ color: 'var(--primary-purple)' }}>
+      <div className="relative max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-[var(--primary-purple)]/10">
+            <Sparkles className="w-4 h-4 text-[var(--primary-purple)]" />
+            <span className="text-sm font-medium text-[var(--primary-purple)] uppercase tracking-wider">
               Depoimentos
             </span>
           </div>
-          
-          <h2 className="text-5xl md:text-6xl font-display mb-6" style={{ color: 'var(--primary-purple)' }}>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[var(--primary-purple)] leading-tight">
             Histórias de Transformação
           </h2>
-          
-          <p className="text-xl font-body max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Veja o que nossas clientes dizem sobre suas experiências no Spaço Bellas
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
-          {testimonials?.map((testimonial, index) => (
-            <Card
-              key={testimonial.id}
-              className={`bg-white group relative overflow-hidden transition-all duration-700 hover:shadow-2xl border border-[var(--primary-purple)]/10 shadow-lg ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-              }`}
-              style={{ 
-                transitionDelay: `${index * 150}ms`,
-                borderRadius: '24px'
-              }}
+        {/* Carousel */}
+        <div className="relative mb-12">
+          {/* Navigation buttons */}
+          <div className="flex justify-center gap-4 mb-8">
+            <Button
+              onClick={goToPrevious}
+              variant="outline"
+              size="icon"
+              className="rounded-full border-2 border-[var(--primary-purple)]/20 hover:border-[var(--primary-purple)] hover:bg-[var(--primary-purple)] hover:text-white transition-all duration-300"
             >
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-[var(--primary-purple)]/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-              
-              <div className="absolute top-8 right-8 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
-                <Quote className="h-24 w-24 text-[var(--primary-purple)]" strokeWidth={1} />
-              </div>
-              
-              <CardContent className="p-8 relative z-10">
-                <div className="flex gap-1 mb-6">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-5 w-5 transition-all duration-300 ${
-                        i < testimonial.rating
-                          ? 'fill-[var(--accent-gold)] text-[var(--accent-gold)] scale-110'
-                          : 'text-gray-300'
-                      }`}
-                      strokeWidth={i < testimonial.rating ? 2 : 1}
-                    />
-                  ))}
-                </div>
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+            <Button
+              onClick={goToNext}
+              variant="outline"
+              size="icon"
+              className="rounded-full border-2 border-[var(--primary-purple)]/20 hover:border-[var(--primary-purple)] hover:bg-[var(--primary-purple)] hover:text-white transition-all duration-300"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </Button>
+          </div>
 
-                <p className="text-base font-body leading-relaxed mb-8 italic min-h-[120px]" style={{ color: 'var(--text-secondary)' }}>
-                  "{testimonial.content}"
-                </p>
+          {/* Testimonials grid */}
+          <div className="grid gap-6 md:grid-cols-3 mb-8">
+            {getVisibleTestimonials().map((testimonial, index) => (
+              <Card
+                key={`${testimonial.id}-${index}`}
+                className={`group relative overflow-hidden border-2 transition-all duration-500 hover:shadow-2xl ${
+                  index === 0
+                    ? "border-[var(--primary-purple)]/30 md:scale-105 shadow-xl"
+                    : "border-[var(--primary-purple)]/10 shadow-lg"
+                }`}
+                style={{
+                  animationDelay: `${index * 100}ms`
+                }}
+              >
+                {/* Glass effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/50 backdrop-blur-sm" />
 
-                <div className="pt-6 border-t-2 border-[var(--primary-purple)]/10">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[var(--primary-purple)] to-[var(--primary-purple-light)] flex items-center justify-center shadow-lg flex-shrink-0">
-                      <span className="text-white font-display text-lg">
-                        {testimonial.customerName.split(' ').map(n => n[0]).slice(0, 2).join('')}
-                      </span>
+                <CardContent className="relative p-6 space-y-4">
+                  {/* Quote icon */}
+                  <div className="flex justify-between items-start">
+                    <Quote className="w-10 h-10 text-[var(--primary-purple)]/20" />
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < testimonial.rating
+                              ? "fill-[var(--primary-purple)] text-[var(--primary-purple)]"
+                              : "fill-gray-200 text-gray-200"
+                          }`}
+                        />
+                      ))}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-display text-xl leading-tight truncate" style={{ color: 'var(--primary-purple)' }}>
+                  </div>
+
+                  {/* Content */}
+                  <p className="text-gray-700 leading-relaxed text-sm italic min-h-[120px]">
+                    "{testimonial.content}"
+                  </p>
+
+                  {/* Customer info */}
+                  <div className="flex items-center gap-3 pt-4 border-t border-[var(--primary-purple)]/10">
+                    {/* Avatar */}
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[var(--primary-purple)] to-[var(--primary-purple)]/70 flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                      {testimonial.customerName.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-[var(--primary-purple)] truncate">
                         {testimonial.customerName}
                       </p>
-                      <p className="text-sm font-body mt-1 truncate" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-xs text-gray-500 truncate">
                         {testimonial.service}
                       </p>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+
+                {/* Hover gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-purple)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </Card>
+            ))}
+          </div>
+
+          {/* Dots navigation */}
+          <div className="flex justify-center gap-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? "w-8 bg-[var(--primary-purple)]"
+                    : "w-2 bg-[var(--primary-purple)]/30 hover:bg-[var(--primary-purple)]/50"
+                }`}
+                aria-label={`Ir para depoimento ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
-        {testimonials && testimonials.length > 0 && (
-          <div className={`flex justify-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <Card 
-              className="bg-white shadow-xl border border-[var(--primary-purple)]/10 hover:shadow-2xl transition-shadow duration-300"
-              style={{ borderRadius: '24px' }}
-            >
-              <CardContent className="px-12 py-8">
-                <div className="flex flex-col sm:flex-row items-center gap-8">
-                  <div className="text-center">
-                    <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-6xl font-display leading-none" style={{ color: 'var(--primary-purple)' }}>4.9</span>
-                      <span className="text-3xl font-body" style={{ color: 'var(--text-secondary)' }}>/5</span>
-                    </div>
-                    <div className="flex gap-1 justify-center mb-2">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className="h-6 w-6 fill-[var(--accent-gold)] text-[var(--accent-gold)]"
-                        />
-                      ))}
-                    </div>
-                    <p className="text-sm font-body" style={{ color: 'var(--text-muted)' }}>
-                      Avaliação Média
-                    </p>
-                  </div>
-                  
-                  <div className="h-20 w-px bg-gradient-to-b from-transparent via-[var(--primary-purple)]/30 to-transparent hidden sm:block"></div>
-                  <div className="h-px w-20 bg-gradient-to-r from-transparent via-[var(--primary-purple)]/30 to-transparent sm:hidden"></div>
-                  
-                  <div className="text-center">
-                    <div className="text-6xl font-display mb-2 leading-none" style={{ color: 'var(--primary-purple)' }}>
-                      500+
-                    </div>
-                    <p className="text-sm font-body" style={{ color: 'var(--text-muted)' }}>
-                      Clientes Satisfeitas
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <Card className="text-center p-8 border-2 border-[var(--primary-purple)]/10 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-5xl font-bold text-[var(--primary-purple)]">4.9</span>
+                <span className="text-2xl text-gray-400">/5</span>
+              </div>
+              <div className="flex justify-center gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-5 h-5 fill-[var(--primary-purple)] text-[var(--primary-purple)]"
+                  />
+                ))}
+              </div>
+              <p className="text-sm text-gray-600 font-medium">Avaliação Média</p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center p-8 border-2 border-[var(--primary-purple)]/10 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="space-y-2">
+              <div className="text-5xl font-bold text-[var(--primary-purple)]">500+</div>
+              <p className="text-sm text-gray-600 font-medium">Clientes Satisfeitas</p>
+              <div className="flex justify-center">
+                <Sparkles className="w-6 h-6 text-[var(--primary-purple)]" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );

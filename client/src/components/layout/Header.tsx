@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const navItems = [
@@ -41,14 +41,12 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Controle de overflow do body quando menu mobile está aberto
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -60,7 +58,7 @@ export function Header() {
       const headerOffset = 100;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -71,171 +69,151 @@ export function Header() {
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 right-0 transition-all duration-500 z-50 ${
-          scrolled 
-            ? 'header-glass shadow-2xl' 
-            : 'bg-gradient-to-b from-black/20 to-transparent'
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Header */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-md shadow-md"
+            : "bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
             <button
               onClick={() => smoothScrollTo("home")}
-              className="flex items-center gap-3 group relative z-10"
+              className="flex items-center gap-2 group"
             >
-              <div>
-                <span className={`text-3xl font-display font-bold tracking-wide block transition-colors duration-300 ${
-                  scrolled ? 'text-[var(--primary-purple)]' : 'text-white drop-shadow-lg'
+              <div className="flex items-center gap-2">
+                <Sparkles className={`w-6 h-6 transition-colors ${
+                  scrolled ? "text-[var(--primary-purple)]" : "text-white"
+                }`} />
+                <span className={`text-2xl font-serif font-bold transition-colors ${
+                  scrolled ? "text-[var(--primary-purple)]" : "text-white"
                 }`}>
                   Spaço Bellas
                 </span>
               </div>
             </button>
 
-            <nav className="hidden xl:flex items-center gap-1">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <button
                   key={item.target}
                   onClick={() => smoothScrollTo(item.target)}
-                  className={`relative px-5 py-3 text-sm font-body font-medium transition-all duration-300 group ${
-                    scrolled 
-                      ? 'text-[var(--text-primary)] hover:text-[var(--primary-purple)]' 
-                      : 'text-white/90 hover:text-white'
-                  } ${
-                    activeSection === item.target ? 'font-semibold' : ''
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeSection === item.target
+                      ? scrolled
+                        ? "bg-[var(--primary-purple)] text-white"
+                        : "bg-white/20 text-white backdrop-blur-sm"
+                      : scrolled
+                      ? "text-gray-700 hover:bg-gray-100"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   {item.label}
-                  <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[var(--primary-purple)] to-[var(--accent-gold)] transition-all duration-300 ${
-                    activeSection === item.target 
-                      ? 'opacity-100 scale-x-100' 
-                      : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
-                  }`}></span>
                 </button>
               ))}
             </nav>
 
-            <div className="hidden xl:flex items-center gap-4">
+            {/* Desktop CTA */}
+            <div className="hidden lg:flex items-center gap-3">
               <a
-                href={`tel:${PHONE_NUMBER.replace(/\D/g, '')}`}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                  scrolled 
-                    ? 'text-[var(--primary-purple)] hover:bg-[var(--primary-purple-ultra-light)]' 
-                    : 'text-white hover:bg-white/10'
+                href={`tel:${PHONE_NUMBER}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-700 hover:bg-gray-100"
+                    : "text-white/90 hover:bg-white/10"
                 }`}
               >
-                <Phone className="h-4 w-4" />
-                <span className="text-sm font-body font-medium">{PHONE_NUMBER}</span>
+                <Phone className="w-4 h-4" />
+                <span className="hidden xl:inline">{PHONE_NUMBER}</span>
               </a>
-              
+
               <Button
-                asChild
-                className="btn-primary-luxury relative z-10"
+                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
+                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium shadow-sm"
+                size="sm"
               >
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Agende Agora
-                </a>
+                <Sparkles className="w-4 h-4 mr-2" />
+                Agendar
               </Button>
             </div>
 
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`xl:hidden p-3 rounded-full transition-all duration-300 relative z-10 ${
-                scrolled 
-                  ? 'text-[var(--primary-purple)] hover:bg-[var(--primary-purple-ultra-light)]' 
-                  : 'text-white hover:bg-white/10'
+              className={`lg:hidden p-2 rounded-lg transition-colors ${
+                scrolled
+                  ? "text-gray-900 hover:bg-gray-100"
+                  : "text-white hover:bg-white/10"
               }`}
               aria-label="Menu"
             >
-              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 z-40 xl:hidden transition-all duration-500 ${
-          mobileMenuOpen 
-            ? 'opacity-100 pointer-events-auto' 
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setMobileMenuOpen(false)}
-        ></div>
-        
-        {/* Menu Panel */}
-        <div className={`absolute right-0 top-0 bottom-0 w-full max-w-sm bg-gradient-to-br from-[var(--neutral-cream)] via-[var(--neutral-beige-light)] to-[var(--neutral-beige)] shadow-2xl overflow-y-auto transition-transform duration-500 ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}>
-          {/* Botão de fechar dentro do menu */}
-          <div className="absolute top-6 right-6 z-10">
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-3 rounded-full bg-white/80 text-[var(--primary-purple)] hover:bg-white hover:scale-110 transition-all shadow-lg"
-              aria-label="Fechar menu"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          <div className="p-8 pt-24">
-            <div className="mb-12">
-              <span className="text-3xl font-display text-[var(--primary-purple)] block font-bold">
-                Spaço Bellas
-              </span>
-            </div>
-            
-            <nav className="flex flex-col gap-2 mb-12">
-              {navItems.map((item, index) => (
+        {/* Mobile Menu */}
+        <div
+          className={`lg:hidden fixed top-20 left-0 right-0 bg-white shadow-xl transition-all duration-300 z-40 ${
+            mobileMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none"
+          }`}
+        >
+          <nav className="max-h-[calc(100vh-5rem)] overflow-y-auto">
+            <div className="px-4 py-6 space-y-2">
+              {navItems.map((item) => (
                 <button
                   key={item.target}
                   onClick={() => smoothScrollTo(item.target)}
-                  className={`text-left py-4 px-6 rounded-2xl font-body font-medium text-lg transition-all duration-300 ${
+                  className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     activeSection === item.target
-                      ? 'bg-[var(--primary-purple)] text-white shadow-lg'
-                      : 'text-[var(--text-primary)] hover:bg-white/60'
+                      ? "bg-[var(--primary-purple)] text-white"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
-                  style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {item.label}
                 </button>
               ))}
-            </nav>
 
-            <div className="space-y-4">
-              <a
-                href={`tel:${PHONE_NUMBER.replace(/\D/g, '')}`}
-                className="flex items-center justify-center gap-3 w-full py-4 px-6 rounded-2xl bg-white text-[var(--primary-purple)] font-body font-semibold text-lg hover:shadow-lg transition-all"
-              >
-                <Phone className="h-5 w-5" />
-                {PHONE_NUMBER}
-              </a>
-              
-              <Button
-                asChild
-                className="btn-primary-luxury w-full h-14 text-lg"
-              >
+              {/* Mobile CTA */}
+              <div className="pt-4 space-y-2 border-t border-gray-200">
                 <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`tel:${PHONE_NUMBER}`}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100 transition-colors"
                 >
-                  Agende sua Experiência
+                  <Phone className="w-4 h-4" />
+                  {PHONE_NUMBER}
                 </a>
-              </Button>
+
+                <Button
+                  onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
+                  className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium"
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Agendar Agora
+                </Button>
+              </div>
             </div>
-          </div>
+          </nav>
         </div>
-      </div>
+      </header>
     </>
   );
 }
