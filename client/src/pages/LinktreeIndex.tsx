@@ -171,7 +171,7 @@ export default function LinktreeLanding() {
           </svg>
         </a>
         <a
-          href="https://youtube.com/@spacobellasoficial"
+          href="https://youtube.com/@SpacoBellasBellas"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-500 hover:text-pink-500 transition-colors cursor-pointer"
