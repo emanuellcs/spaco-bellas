@@ -8,8 +8,8 @@ const WHATSAPP_NUMBER = "5511976820135";
 const PHONE_NUMBER = "(11) 97682-0135";
 const EMAIL = "contato@spacobellas.com.br";
 const ADDRESS = "R. Antônio Fortunato, 678 - Burgo Paulista, São Paulo - SP";
-const INSTAGRAM = "https://instagram.com/spacobellas";
-const FACEBOOK = "https://facebook.com/spacobellas";
+const INSTAGRAM = "https://instagram.com/spacobellasoficial";
+const FACEBOOK = "https://facebook.com/p/Spaço-Bellas-61559677151317/";
 
 const navigationSections = [
   {
@@ -17,18 +17,18 @@ const navigationSections = [
     links: [
       { label: "Início", target: "home" },
       { label: "Sobre", target: "introduction" },
-      { label: "Day Spa", target: "spa-day" },
-      { label: "Mensal Bellas", target: "mensal-bellas" },
-      { label: "Empresas", target: "empresas" },
-    ]
+      { label: "Experiências", target: "spa-day" },
+      { label: "Diferenciais", target: "differentials" },
+    ],
   },
   {
-    title: "Serviços",
+    title: "Contato",
     links: [
-      { label: "Catálogo Completo", target: "menu" },
       { label: "Depoimentos", target: "testimonials" },
-    ]
-  }
+      { label: "WhatsApp", target: "whatsapp" },
+      { label: "Instagram", target: "instagram" },
+    ],
+  },
 ];
 
 export function Footer() {
@@ -45,7 +45,7 @@ export function Footer() {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -61,77 +61,78 @@ export function Footer() {
     }
   };
 
+  const handleLinkClick = (target: string) => {
+    if (target === "whatsapp") {
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}`, "_blank");
+    } else if (target === "instagram") {
+      window.open(INSTAGRAM, "_blank");
+    } else {
+      smoothScrollTo(target);
+    }
+  };
+
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300">
-      {/* Decorative top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--primary-purple)] to-transparent opacity-50" />
-
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-12">
-          {/* Brand Column */}
+    <footer className="bg-gradient-to-b from-gray-900 to-black text-white">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Brand column */}
           <div className="space-y-6">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6 text-[var(--primary-purple)]" />
-                <h3 className="text-2xl font-serif font-bold text-white">
-                  Spaço Bellas
-                </h3>
-              </div>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                Seu refúgio de luxo e bem-estar em São Paulo. Experiências transformadoras desde 2015.
-              </p>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-8 h-8 text-[var(--primary-purple)]" />
+              <h3 className="text-2xl font-bold">Spaço Bellas</h3>
             </div>
-
-            {/* Social Media */}
-            <div>
-              <p className="text-sm font-semibold text-white mb-4">Siga-nos</p>
-              <div className="flex items-center gap-3">
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative w-11 h-11 rounded-xl bg-gray-800/50 hover:bg-green-600 flex items-center justify-center transition-all duration-300 hover:scale-110 border border-gray-700 hover:border-green-600"
-                  aria-label="WhatsApp"
-                >
-                  <FaWhatsapp className="w-5 h-5 transition-transform group-hover:scale-110" />
-                </a>
-                <a
-                  href={INSTAGRAM}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative w-11 h-11 rounded-xl bg-gray-800/50 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 flex items-center justify-center transition-all duration-300 hover:scale-110 border border-gray-700 hover:border-pink-600"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram className="w-5 h-5 transition-transform group-hover:scale-110" />
-                </a>
-                <a
-                  href={FACEBOOK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative w-11 h-11 rounded-xl bg-gray-800/50 hover:bg-blue-600 flex items-center justify-center transition-all duration-300 hover:scale-110 border border-gray-700 hover:border-blue-600"
-                  aria-label="Facebook"
-                >
-                  <FaFacebook className="w-5 h-5 transition-transform group-hover:scale-110" />
-                </a>
-              </div>
-            </div>
+            <p className="text-gray-400 leading-relaxed">
+              Spa Day das Celebridades: onde toda mulher vive seu dia de estrela.
+            </p>
+            <div className="flex gap-4">
+            {/* Instagram - Gradiente no hover */}
+            <a
+              href={INSTAGRAM}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-10 h-10 bg-white/10 hover:bg-gradient-to-br hover:from-purple-600 hover:via-pink-500 hover:to-orange-400 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+              aria-label="Instagram"
+            >
+              <FaInstagram className="w-5 h-5 text-white" />
+            </a>
+            
+            {/* Facebook - Azul no hover */}
+            <a
+              href={FACEBOOK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-10 h-10 bg-white/10 hover:bg-[#1877F2] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+              aria-label="Facebook"
+            >
+              <FaFacebook className="w-5 h-5 text-white" />
+            </a>
+            
+            {/* WhatsApp - Verde no hover */}
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-10 h-10 bg-white/10 hover:bg-[#25D366] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+              aria-label="WhatsApp"
+            >
+              <FaWhatsapp className="w-5 h-5 text-white" />
+            </a>
+          </div>
           </div>
 
-          {/* Navigation Columns */}
+          {/* Navigation columns */}
           {navigationSections.map((section, index) => (
             <div key={index}>
-              <h4 className="text-base font-semibold text-white mb-5 uppercase tracking-wider text-sm">
+              <h4 className="text-lg font-bold mb-4 text-[var(--primary-purple)]">
                 {section.title}
               </h4>
               <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.target}>
+                {section.links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
                     <button
-                      onClick={() => smoothScrollTo(link.target)}
-                      className="group text-sm text-gray-400 hover:text-[var(--primary-purple)] transition-colors flex items-center gap-2"
+                      onClick={() => handleLinkClick(link.target)}
+                      className="text-gray-400 hover:text-white transition-colors duration-300 text-left"
                     >
-                      <span className="w-0 h-0.5 bg-[var(--primary-purple)] group-hover:w-3 transition-all duration-300" />
                       {link.label}
                     </button>
                   </li>
@@ -140,118 +141,74 @@ export function Footer() {
             </div>
           ))}
 
-          {/* Contact Column */}
+          {/* Contact column */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-5 uppercase tracking-wider text-sm">
-              Contato
+            <h4 className="text-lg font-bold mb-4 text-[var(--primary-purple)]">
+              Fale Conosco
             </h4>
             <ul className="space-y-4">
-              <li>
-                <a
-                  href={`tel:${PHONE_NUMBER}`}
-                  className="group flex items-start gap-3 text-sm text-gray-400 hover:text-[var(--primary-purple)] transition-colors"
-                >
-                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gray-800/50 border border-gray-700 group-hover:border-[var(--primary-purple)] flex items-center justify-center transition-colors">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div className="pt-1.5">
-                    <span className="block">{PHONE_NUMBER}</span>
-                  </div>
+              <li className="flex items-start gap-3 text-gray-400">
+                <MapPin className="w-5 h-5 flex-shrink-0 mt-1 text-[var(--primary-purple)]" />
+                <span className="text-sm">{ADDRESS}</span>
+              </li>
+              <li className="flex items-center gap-3 text-gray-400">
+                <Phone className="w-5 h-5 flex-shrink-0 text-[var(--primary-purple)]" />
+                <a href={`tel:${WHATSAPP_NUMBER}`} className="hover:text-white transition-colors text-sm">
+                  {PHONE_NUMBER}
                 </a>
               </li>
-              <li>
-                <a
-                  href={`mailto:${EMAIL}`}
-                  className="group flex items-start gap-3 text-sm text-gray-400 hover:text-[var(--primary-purple)] transition-colors"
-                >
-                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gray-800/50 border border-gray-700 group-hover:border-[var(--primary-purple)] flex items-center justify-center transition-colors">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div className="pt-1.5">
-                    <span className="block break-all">{EMAIL}</span>
-                  </div>
+              <li className="flex items-center gap-3 text-gray-400">
+                <Mail className="w-5 h-5 flex-shrink-0 text-[var(--primary-purple)]" />
+                <a href={`mailto:${EMAIL}`} className="hover:text-white transition-colors text-sm">
+                  {EMAIL}
                 </a>
               </li>
-              <li>
-                <div className="flex items-start gap-3 text-sm text-gray-400">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gray-800/50 border border-gray-700 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-[var(--primary-purple)]" />
-                  </div>
-                  <div className="pt-1.5">
-                    <span className="block leading-relaxed">{ADDRESS}</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-start gap-3 text-sm text-gray-400">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gray-800/50 border border-gray-700 flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-[var(--primary-purple)]" />
-                  </div>
-                  <div className="pt-1.5 space-y-0.5">
-                    <p className="text-gray-400">Seg-Sáb: 09:00 - 20:00</p>
-                    <p className="text-gray-400">Dom: Fechado</p>
-                  </div>
+              <li className="flex items-start gap-3 text-gray-400">
+                <Clock className="w-5 h-5 flex-shrink-0 mt-1 text-[var(--primary-purple)]" />
+                <div className="text-sm">
+                  <div>Seg - Sáb: 9h às 19h</div>
+                  <div>Dom: Fechado</div>
                 </div>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="pt-12 pb-8 border-t border-gray-800">
+        {/* Newsletter */}
+        <div className="border-t border-white/10 pt-12 mb-12">
           <div className="max-w-2xl mx-auto text-center">
-            <h4 className="text-lg font-semibold text-white mb-2">
-              Newsletter
+            <h4 className="text-2xl font-bold mb-4">
+              Receba novidades exclusivas 💜
             </h4>
-            <p className="text-sm text-gray-400 mb-6">
-              Receba novidades, promoções exclusivas e dicas de bem-estar
+            <p className="text-gray-400 mb-6">
+              Cadastre-se para receber promoções especiais e dicas de autocuidado
             </p>
-
-            {subscribed ? (
-              <div className="flex items-center justify-center gap-2 px-6 py-4 bg-green-900/20 border border-green-700 rounded-xl text-green-400 text-sm">
-                <Send className="w-5 h-5" />
-                <span className="font-medium">Obrigado por se inscrever!</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  placeholder="Seu melhor e-mail"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="flex-1 h-12 bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[var(--primary-purple)] focus:ring-[var(--primary-purple)] rounded-xl"
-                />
-                <Button
-                  type="submit"
-                  className="h-12 px-8 bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium rounded-xl shadow-lg hover:shadow-[var(--primary-purple)]/20 transition-all"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Inscrever
-                </Button>
-              </form>
-            )}
+            <form onSubmit={handleSubscribe} className="flex gap-4 max-w-md mx-auto">
+              <Input
+                type="email"
+                placeholder="Seu melhor e-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-[var(--primary-purple)]"
+                required
+              />
+              <Button
+                type="submit"
+                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 px-8"
+              >
+                {subscribed ? "Enviado! ✓" : "Enviar"}
+                {!subscribed && <Send className="w-4 h-4 ml-2" />}
+              </Button>
+            </form>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-800/50 bg-gray-950/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-            <p className="text-gray-500">
-              © {currentYear} Spaço Bellas. Todos os direitos reservados.
-            </p>
-            <div className="flex items-center gap-6">
-              <button className="text-gray-500 hover:text-[var(--primary-purple)] transition-colors">
-                Política de Privacidade
-              </button>
-              <span className="text-gray-700">•</span>
-              <button className="text-gray-500 hover:text-[var(--primary-purple)] transition-colors">
-                Termos de Uso
-              </button>
-            </div>
-          </div>
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 pt-8 text-center text-gray-400 text-sm">
+          <p>© {currentYear} Spaço Bellas | Unidade Patriarca | 3min do Metrô Patriarca</p>
+          <p className="mt-2">
+            Feito com 💜 por <span className="text-[var(--primary-purple)] font-medium">Start Tecnológico</span>
+          </p>
         </div>
       </div>
     </footer>

@@ -5,15 +5,13 @@ import { useState, useEffect } from "react";
 const navItems = [
   { label: "Início", target: "home" },
   { label: "Sobre", target: "introduction" },
-  { label: "Day Spa", target: "spa-day" },
-  { label: "Mensal Bellas", target: "mensal-bellas" },
-  { label: "Empresas", target: "empresas" },
-  { label: "Serviços", target: "menu" },
+  { label: "Experiências", target: "spa-day" },
+  { label: "Diferenciais", target: "differentials" },
   { label: "Depoimentos", target: "testimonials" },
 ];
 
 const WHATSAPP_NUMBER = "5511976820135";
-const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de agendar minha experiência no Spaço Bellas.");
+const WHATSAPP_MESSAGE = "Olá!%20Quero%20conhecer%20o%20Spa%20Day%20das%20Celebridades!";
 const PHONE_NUMBER = "(11) 97682-0135";
 
 export function Header() {
@@ -47,6 +45,7 @@ export function Header() {
     } else {
       document.body.style.overflow = 'unset';
     }
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -79,73 +78,76 @@ export function Header() {
 
       {/* Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-md"
-            : "bg-transparent"
+            ? "bg-white/95 backdrop-blur-md shadow-lg py-3"
+            : "bg-transparent py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+        <nav className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between">
+            {/* Logo - SEM ÍCONE */}
             <button
               onClick={() => smoothScrollTo("home")}
-              className="flex items-center gap-2 group"
+              className="group transition-transform hover:scale-105"
             >
-              <div className="flex items-center gap-2">
-                <Sparkles className={`w-6 h-6 transition-colors ${
-                  scrolled ? "text-[var(--primary-purple)]" : "text-white"
-                }`} />
-                <span className={`text-2xl font-serif font-bold transition-colors ${
-                  scrolled ? "text-[var(--primary-purple)]" : "text-white"
-                }`}>
-                  Spaço Bellas
-                </span>
-              </div>
+              <span
+                className={`font-bold text-xl leading-tight ${
+                  scrolled ? "text-gray-900" : "text-white"
+                }`}
+              >
+                Spaço Bellas
+              </span>
             </button>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-8">
               {navItems.map((item) => (
                 <button
                   key={item.target}
                   onClick={() => smoothScrollTo(item.target)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeSection === item.target
-                      ? scrolled
-                        ? "bg-[var(--primary-purple)] text-white"
-                        : "bg-white/20 text-white backdrop-blur-sm"
-                      : scrolled
-                      ? "text-gray-700 hover:bg-gray-100"
-                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                  className={`font-medium transition-all duration-300 relative group ${
+                    scrolled
+                      ? activeSection === item.target
+                        ? "text-[var(--primary-purple)]"
+                        : "text-gray-700 hover:text-[var(--primary-purple)]"
+                      : activeSection === item.target
+                      ? "text-white"
+                      : "text-white/80 hover:text-white"
                   }`}
                 >
                   {item.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-[var(--primary-purple)] transition-all duration-300 ${
+                      activeSection === item.target ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
                 </button>
               ))}
-            </nav>
+            </div>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center gap-4">
               <a
-                href={`tel:${PHONE_NUMBER}`}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                href={`tel:${WHATSAPP_NUMBER}`}
+                className={`flex items-center gap-2 font-medium transition-colors ${
                   scrolled
-                    ? "text-gray-700 hover:bg-gray-100"
-                    : "text-white/90 hover:bg-white/10"
+                    ? "text-gray-700 hover:text-[var(--primary-purple)]"
+                    : "text-white/90 hover:text-white"
                 }`}
               >
                 <Phone className="w-4 h-4" />
-                <span className="hidden xl:inline">{PHONE_NUMBER}</span>
+                {PHONE_NUMBER}
               </a>
 
               <Button
-                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
-                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium shadow-sm"
-                size="sm"
+                onClick={() =>
+                  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")
+                }
+                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <Sparkles className="w-4 h-4 mr-2" />
-                Agendar
+                Quero minha experiência
               </Button>
             </div>
 
@@ -166,53 +168,72 @@ export function Header() {
               )}
             </button>
           </div>
-        </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`lg:hidden fixed top-20 left-0 right-0 bg-white shadow-xl transition-all duration-300 z-40 ${
-            mobileMenuOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-4 pointer-events-none"
-          }`}
-        >
-          <nav className="max-h-[calc(100vh-5rem)] overflow-y-auto">
-            <div className="px-4 py-6 space-y-2">
-              {navItems.map((item) => (
+          {/* Mobile Menu */}
+          <div
+            className={`lg:hidden fixed top-0 right-0 h-screen w-80 bg-white shadow-2xl transform transition-transform duration-300 z-50 ${
+              mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <div className="flex flex-col h-full">
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <span className="font-bold text-xl text-gray-900">Spaço Bellas</span>
                 <button
-                  key={item.target}
-                  onClick={() => smoothScrollTo(item.target)}
-                  className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    activeSection === item.target
-                      ? "bg-[var(--primary-purple)] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                 >
-                  {item.label}
+                  <X className="w-6 h-6 text-gray-900" />
                 </button>
-              ))}
+              </div>
 
-              {/* Mobile CTA */}
-              <div className="pt-4 space-y-2 border-t border-gray-200">
-                <a
-                  href={`tel:${PHONE_NUMBER}`}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  {PHONE_NUMBER}
-                </a>
+              {/* Mobile Menu Items */}
+              <div className="flex-1 overflow-y-auto py-6">
+                <div className="flex flex-col gap-2 px-6">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.target}
+                      onClick={() => smoothScrollTo(item.target)}
+                      className={`text-left px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                        activeSection === item.target
+                          ? "bg-purple-50 text-[var(--primary-purple)]"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
 
+                {/* Mobile Contact Info */}
+                <div className="mt-8 px-6">
+                  <div className="p-4 bg-purple-50 rounded-lg space-y-3">
+                    <div className="flex items-center gap-3 text-gray-700">
+                      <Phone className="w-5 h-5 text-[var(--primary-purple)]" />
+                      <a href={`tel:${WHATSAPP_NUMBER}`} className="font-medium">
+                        {PHONE_NUMBER}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile CTA Button */}
+              <div className="p-6 border-t border-gray-200">
                 <Button
-                  onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
-                  className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium"
+                  onClick={() =>
+                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")
+                  }
+                  className="w-full bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium shadow-lg"
+                  size="lg"
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Agendar Agora
+                  Quero minha experiência
                 </Button>
               </div>
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       </header>
     </>
   );
