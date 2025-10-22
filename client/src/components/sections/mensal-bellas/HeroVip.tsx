@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ChevronDown } from "lucide-react";
-import heroImage from "./Luxury_spa_treatment_room_eeed824b.png";
+import heroImage from "@assets/generated_images/Luxury_spa_treatment_room_eeed824b.png";
 
-// Identidade visual dos documentos
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -12,7 +11,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// Reaproveitando o padrão do seu HeroSection (constantes locais e CTA WhatsApp)
 const WHATSAPP_NUMBER = "5511976820135";
 const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -21,7 +19,6 @@ const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   return `${base}?${params.toString()}`;
 };
 
-// Copy da fonte de verdade (landing/roteiro)
 const DEFAULT_TITLE =
   "Toda mulher merece um dia só pra ela — e o seu começa agora.";
 const DEFAULT_SUBTITLE =
@@ -41,7 +38,6 @@ export function HeroVip({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Mesmo padrão de animação de entrada usado no seu HeroSection
     setIsVisible(true);
   }, []);
 
@@ -51,7 +47,6 @@ export function HeroVip({
       className="relative isolate overflow-hidden"
       style={{ backgroundColor: COLORS.lilacBg }}
     >
-      {/* Background image com overlay lilás para manter legibilidade */}
       <div className="absolute inset-0 -z-10">
         <img
           src={heroImage}
@@ -65,7 +60,6 @@ export function HeroVip({
               "linear-gradient(180deg, rgba(246,237,249,0.9) 0%, rgba(246,237,249,0.7) 40%, rgba(246,237,249,0.95) 100%)",
           }}
         />
-        {/* Glow radial suave para destacar o título */}
         <div
           aria-hidden
           className="absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full blur-3xl"
@@ -74,7 +68,6 @@ export function HeroVip({
       </div>
 
       <div className="container mx-auto px-4">
-        {/* Topbar de “selo” com Sparkles seguindo sua identidade */}
         <div className="flex w-full items-center justify-center pt-8">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -89,7 +82,6 @@ export function HeroVip({
           </span>
         </div>
 
-        {/* Hero content */}
         <div
           className={[
             "mx-auto max-w-3xl py-12 md:py-20 text-center transition-all duration-700",
@@ -114,7 +106,6 @@ export function HeroVip({
             {subtitle}
           </p>
 
-          {/* CTAs: WhatsApp + âncora para planos */}
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
               asChild
@@ -152,13 +143,11 @@ export function HeroVip({
             </Button>
           </div>
 
-          {/* Microtexto de prova social/pertencimento (curto para não poluir o hero) */}
           <p className="mt-4 text-sm opacity-80" style={{ color: COLORS.text }}>
             Um único lugar para fazer tudo com carinho e sair se sentindo você por inteiro.
           </p>
         </div>
 
-        {/* Indicador de scroll para a próxima dobra (planos) */}
         <div className="pb-8 md:pb-12">
           <div className="flex items-center justify-center">
             <a

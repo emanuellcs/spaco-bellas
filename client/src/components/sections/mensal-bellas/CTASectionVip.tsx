@@ -10,7 +10,6 @@ import {
   Bath,
 } from "lucide-react";
 
-// Paleta do documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -18,7 +17,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// Padrão adotado no projeto (mesmo modelo do Hero/CTA original)
 const WHATSAPP_NUMBER = "5511976820135";
 const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -52,7 +50,6 @@ export function CTASectionVip({
       style={{ backgroundColor: COLORS.lilacBg, color: COLORS.text }}
     >
       <div className="container mx-auto px-4">
-        {/* Chip no padrão visual do projeto */}
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -67,7 +64,6 @@ export function CTASectionVip({
           </span>
         </div>
 
-        {/* Header */}
         <header
           className={[
             "mx-auto mt-4 max-w-3xl text-center transition-all duration-700",
@@ -84,7 +80,6 @@ export function CTASectionVip({
           <p className="mt-2 opacity-90">{subtitle}</p>
         </header>
 
-        {/* Benefícios/observações em cards (identidade do CTA original) */}
         <div className="mx-auto mt-6 grid max-w-4xl gap-4 sm:grid-cols-2">
           <article className="rounded-2xl bg-white p-5 shadow border border-transparent hover:shadow-md transition">
             <div className="flex items-center gap-2">
@@ -127,7 +122,6 @@ export function CTASectionVip({
           </article>
         </div>
 
-        {/* CTAs */}
         <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-3 sm:flex-row">
           <Button
             asChild
@@ -163,7 +157,6 @@ export function CTASectionVip({
           </Button>
         </div>
 
-        {/* Rodapé informativo curto */}
         <p className="mx-auto mt-4 max-w-3xl text-center text-xs opacity-75">
           Faça tudo em um só lugar, com economia real e pertinho de você — beleza completa, relaxamento e pertencimento todos os meses.
         </p>

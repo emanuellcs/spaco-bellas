@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Crown, Sparkles } from "lucide-react";
 
-// Paleta do documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -11,7 +10,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// WhatsApp (mesmo padrão dos seus TSX com constante local)
 const WHATSAPP_NUMBER = "5511976820135";
 const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -23,7 +21,6 @@ const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
 const MSG_MENSAL_VIP =
   "Olá! Quero conhecer o Programa Mulheres VIP Bellas e ver os planos.";
 
-// Tipagem e dados (fonte de verdade dos documentos)
 type PlanId = "essencial" | "relax" | "celebridade" | "royal" | "infinity";
 type Plan = {
   id: PlanId;
@@ -98,13 +95,16 @@ const PLANS: Plan[] = [
   },
 ];
 
-// Utilitário simples de moeda
 const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
 
 export function PlansGrid() {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
+
+  // Separar em duas linhas: 3 primeiros cards / 2 últimos cards
+  const firstRow = PLANS.slice(0, 3);
+  const secondRow = PLANS.slice(3, 5);
 
   return (
     <section
@@ -114,7 +114,6 @@ export function PlansGrid() {
       style={{ backgroundColor: COLORS.lilacBg, color: COLORS.text }}
     >
       <div className="container mx-auto px-4">
-        {/* Header com selo e título no padrão visual existente */}
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -147,70 +146,134 @@ export function PlansGrid() {
           </p>
         </header>
 
-        {/* Grid de planos */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PLANS.map((p) => (
-            <article
-              key={p.id}
-              className={[
-                "rounded-2xl bg-white p-6 shadow border transition",
-                p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
-              ].join(" ")}
-              aria-label={`Plano ${p.name}`}
-            >
-              <header className="mb-4">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-xl font-semibold">{p.name}</h3>
-                  {p.badge && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
-                      {p.badge === "VIP" ? <Crown size={14} /> : null}
-                      {p.badge}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 text-3xl font-bold">
-                  {brl(p.price)}
-                  <span className="text-base font-medium">/mês</span>
-                </p>
-              </header>
-
-              <ul className="space-y-2">
-                {p.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <Check className="mt-1 text-[#8E5BAE]" size={18} aria-hidden />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {p.note && (
-                <p className="mt-3 text-xs opacity-70">
-                  {p.note}
-                </p>
-              )}
-
-              <Button
-                asChild
-                className="mt-6 w-full"
-                style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
+        {/* Container centralizado */}
+        <div className="mt-6 max-w-7xl mx-auto">
+          {/* Primeira linha: 3 cards */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
+            {firstRow.map((p) => (
+              <article
+                key={p.id}
+                className={[
+                  "flex flex-col rounded-2xl bg-white p-6 shadow border transition",
+                  p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
+                ].join(" ")}
+                aria-label={`Plano ${p.name}`}
               >
-                <a
-                  href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
-                    utm_source: "site",
-                    utm_medium: "mensal-bellas",
-                    utm_content: `plan_${p.id}`,
-                  })}
-                  aria-label={`Quero o plano ${p.name}`}
+                <header className="mb-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xl font-semibold">{p.name}</h3>
+                    {p.badge && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
+                        {p.badge === "VIP" ? <Crown size={14} /> : null}
+                        {p.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 text-3xl font-bold">
+                    {brl(p.price)}
+                    <span className="text-base font-medium">/mês</span>
+                  </p>
+                </header>
+
+                <ul className="space-y-2 flex-grow">
+                  {p.bullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <Check className="mt-1 text-[#8E5BAE] flex-shrink-0" size={18} aria-hidden />
+                      <span className="text-sm">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {p.note && (
+                  <p className="mt-3 text-xs opacity-70">
+                    {p.note}
+                  </p>
+                )}
+
+                <Button
+                  asChild
+                  className="mt-6 w-full"
+                  style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
                 >
-                  Quero este plano
-                </a>
-              </Button>
-            </article>
-          ))}
+                  <a
+                    href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
+                      utm_source: "site",
+                      utm_medium: "mensal-bellas",
+                      utm_content: `plan_${p.id}`,
+                    })}
+                    aria-label={`Quero o plano ${p.name}`}
+                  >
+                    Quero este plano
+                  </a>
+                </Button>
+              </article>
+            ))}
+          </div>
+
+          {/* Segunda linha: 2 cards centralizados */}
+          <div className="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+            {secondRow.map((p) => (
+              <article
+                key={p.id}
+                className={[
+                  "flex flex-col rounded-2xl bg-white p-6 shadow border transition",
+                  p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
+                ].join(" ")}
+                aria-label={`Plano ${p.name}`}
+              >
+                <header className="mb-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xl font-semibold">{p.name}</h3>
+                    {p.badge && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
+                        {p.badge === "VIP" ? <Crown size={14} /> : null}
+                        {p.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 text-3xl font-bold">
+                    {brl(p.price)}
+                    <span className="text-base font-medium">/mês</span>
+                  </p>
+                </header>
+
+                <ul className="space-y-2 flex-grow">
+                  {p.bullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <Check className="mt-1 text-[#8E5BAE] flex-shrink-0" size={18} aria-hidden />
+                      <span className="text-sm">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {p.note && (
+                  <p className="mt-3 text-xs opacity-70">
+                    {p.note}
+                  </p>
+                )}
+
+                <Button
+                  asChild
+                  className="mt-6 w-full"
+                  style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
+                >
+                  <a
+                    href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
+                      utm_source: "site",
+                      utm_medium: "mensal-bellas",
+                      utm_content: `plan_${p.id}`,
+                    })}
+                    aria-label={`Quero o plano ${p.name}`}
+                  >
+                    Quero este plano
+                  </a>
+                </Button>
+              </article>
+            ))}
+          </div>
         </div>
 
-        {/* Observações operacionais (coerentes com a operação e funil) */}
-        <div className="mt-6 text-xs opacity-80">
+        <div className="mt-6 text-xs opacity-80 text-center max-w-3xl mx-auto">
           <p>
             Banheira aromática incluída a partir do Plano 2; sábados com taxa premium, seg–qui com bônus para melhor experiência e fluxo.
           </p>

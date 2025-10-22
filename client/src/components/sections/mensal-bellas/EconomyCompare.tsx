@@ -3,7 +3,6 @@ import { BadgePercent, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
 
-// Paleta do documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -11,7 +10,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// Dados oficiais da seção “Economia real” (landing)
 const SERVICES = [
   { label: "Mão + pé (2×/mês)", avulso: 140, plano: "Incluído" },
   { label: "Escova + hidratação (2×/mês)", avulso: 160, plano: "Incluído" },
@@ -39,8 +37,7 @@ export function EconomyCompare() {
       style={{ backgroundColor: COLORS.lilacBg, color: COLORS.text }}
     >
       <div className="container mx-auto px-4">
-        {/* Título e subtítulo */}
-        <header className="max-w-3xl">
+        <header className="max-w-3xl mx-auto text-center">
           <h2
             id="economia-title"
             className="text-2xl md:text-3xl font-semibold"
@@ -53,9 +50,7 @@ export function EconomyCompare() {
           </p>
         </header>
 
-        {/* Cards comparativos */}
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
-          {/* Fora do Bellas */}
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 max-w-4xl mx-auto">
           <article className="rounded-2xl bg-white p-5 shadow">
             <div className="flex items-center gap-2">
               <BadgePercent size={18} style={{ color: COLORS.primary }} />
@@ -77,7 +72,6 @@ export function EconomyCompare() {
             </div>
           </article>
 
-          {/* No plano Bellas */}
           <article className="rounded-2xl bg-white p-5 shadow">
             <div className="flex items-center gap-2">
               <CheckCircle2 size={18} style={{ color: COLORS.primary }} />
@@ -109,15 +103,13 @@ export function EconomyCompare() {
           </article>
         </div>
 
-        {/* Ganhos intangíveis + CTA âncora */}
-        <div className="mt-6 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="mt-6 max-w-3xl mx-auto text-center">
           <p className="text-sm md:text-base opacity-90">
             Além de economizar até R$ {ECONOMIA_MES_ATE} por mês, você ganha algo que dinheiro nenhum compra: tempo pra si, acolhimento e pertencimento.
           </p>
-          <div className="flex md:justify-end">
+          <div className="mt-4 flex justify-center">
             <Button
               asChild
-              className="w-full md:w-auto"
               style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
             >
               <a href="#planos" aria-label="Ver planos do Programa Mulheres VIP Bellas">

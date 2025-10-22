@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Lightbulb, Users2, ArrowRight } from "lucide-react";
 
-// Paleta alinhada ao documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -11,7 +10,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// Mesmo padrão dos seus TSX (HeroSection) com constante local e mensagem pré-preenchida
 const WHATSAPP_NUMBER = "5511976820135";
 const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -32,7 +30,6 @@ export function Workshops() {
       style={{ backgroundColor: COLORS.lilacBg, color: COLORS.text }}
     >
       <div className="container mx-auto px-4">
-        {/* Chip de contexto */}
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -47,7 +44,6 @@ export function Workshops() {
           </span>
         </div>
 
-        {/* Título e subtítulo */}
         <header
           className={[
             "mx-auto mt-4 max-w-3xl text-center transition-all duration-700",
@@ -62,13 +58,11 @@ export function Workshops() {
             Workshops e Networking
           </h2>
           <p className="mt-2 opacity-90">
-            Componente educacional e de pertencimento para impulsionar a sua vida e fortalecer sua rede. 
+            Componente educacional e de pertencimento para impulsionar a sua vida e fortalecer sua rede.
           </p>
         </header>
 
-        {/* Grid de ofertas: Planos 1–2 e Planos 3+ */}
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {/* Planos 1–2: Workshop de renda */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
           <article className="rounded-2xl bg-white p-6 shadow border border-transparent hover:shadow-md transition">
             <div className="flex items-center gap-2">
               <div
@@ -86,7 +80,7 @@ export function Workshops() {
 
             <div className="mt-4 space-y-2">
               <p className="font-medium">
-                Workshop “Como fazer R$ 5.000/mês com Spa dos Pés e Massagens Bellas”.
+                Workshop "Como fazer R$ 5.000/mês com Spa dos Pés e Massagens Bellas".
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Aprendizado prático com foco em renda e autonomia.</li>
@@ -118,7 +112,6 @@ export function Workshops() {
             </div>
           </article>
 
-          {/* Planos 3+: Grupo de alto valor */}
           <article className="rounded-2xl bg-white p-6 shadow border border-transparent hover:shadow-md transition">
             <div className="flex items-center gap-2">
               <div
@@ -135,7 +128,7 @@ export function Workshops() {
             </div>
 
             <div className="mt-4 space-y-2">
-              <p className="font-medium">Grupo “Mulheres de Alto Valor SP”.</p>
+              <p className="font-medium">Grupo "Mulheres de Alto Valor SP".</p>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Networking, mentorias e eventos exclusivos.</li>
                 <li>Ambiente de alto valor, acolhedor e inspirador.</li>
@@ -168,8 +161,7 @@ export function Workshops() {
           </article>
         </div>
 
-        {/* Observação de elegibilidade por plano */}
-        <p className="mt-6 text-xs opacity-80">
+        <p className="mt-6 text-xs opacity-80 text-center max-w-3xl mx-auto">
           Acesso conforme o plano ativo (Workshop: Planos 1–2 • Grupo Mulheres de Alto Valor SP: Planos 3+).
         </p>
       </div>

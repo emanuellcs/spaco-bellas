@@ -1,6 +1,13 @@
 // src/components/sections/mensal-bellas/FAQ.tsx
 import { useState } from "react";
 
+const COLORS = {
+  lilacBg: "#F6EDF9",
+  gold: "#C7A45C",
+  text: "#2F2F2F",
+  primary: "#8E5BAE",
+};
+
 const items = [
   {
     q: "Posso cancelar o plano quando quiser?",
@@ -47,12 +54,12 @@ const items = [
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section aria-labelledby="faq-title" className="py-10 md:py-14">
+    <section aria-labelledby="faq-title" className="py-10 md:py-14" style={{ backgroundColor: COLORS.lilacBg }}>
       <div className="container mx-auto px-4">
-        <h2 id="faq-title" className="text-2xl md:text-3xl font-semibold">
+        <h2 id="faq-title" className="text-2xl md:text-3xl font-semibold text-center" style={{ color: COLORS.gold }}>
           Dúvidas frequentes
         </h2>
-        <ul className="mt-4 divide-y divide-gray-200 rounded-xl bg-white shadow">
+        <ul className="mt-6 divide-y divide-gray-200 rounded-xl bg-white shadow max-w-3xl mx-auto">
           {items.map((it, i) => {
             const expanded = open === i;
             return (

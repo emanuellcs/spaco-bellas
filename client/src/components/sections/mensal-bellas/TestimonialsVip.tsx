@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Star, Quote, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Paleta do documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -10,7 +9,6 @@ const COLORS = {
   primary: "#8E5BAE",
 };
 
-// Tipagem
 type Testimonial = {
   id: string;
   customerName: string;
@@ -20,7 +18,6 @@ type Testimonial = {
   displayOrder: number;
 };
 
-// Depoimentos seguindo os 4 pilares do roteiro (transformação, economia, pertencimento, humanização)
 const testimonials: Testimonial[] = [
   {
     id: "t1",
@@ -78,7 +75,6 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// Utilitário: iniciais para avatar
 const initials = (name: string) =>
   name
     .replace(/,.*/, "")
@@ -99,7 +95,6 @@ export function TestimonialsVip() {
   const autoPlayRef = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
 
-  // Responsivo: detectar mobile
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
     check();
@@ -107,7 +102,6 @@ export function TestimonialsVip() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Animação de entrada via IntersectionObserver
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
@@ -117,7 +111,6 @@ export function TestimonialsVip() {
     return () => observer.disconnect();
   }, []);
 
-  // Autoplay com pausa ao interagir
   useEffect(() => {
     if (isAutoPlaying) {
       autoPlayRef.current = window.setInterval(() => {
@@ -181,7 +174,6 @@ export function TestimonialsVip() {
       onTouchEnd={onTouchEnd}
     >
       <div className="container mx-auto px-4">
-        {/* Chip */}
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -196,7 +188,6 @@ export function TestimonialsVip() {
           </span>
         </div>
 
-        {/* Header */}
         <header
           className={[
             "mx-auto mt-4 max-w-3xl text-center transition-all duration-700",
@@ -215,8 +206,7 @@ export function TestimonialsVip() {
           </p>
         </header>
 
-        {/* Navegação desktop (setas laterais) */}
-        <div className="relative mt-6">
+        <div className="relative mt-6 max-w-6xl mx-auto">
           {!isMobile && (
             <>
               <button
@@ -238,21 +228,17 @@ export function TestimonialsVip() {
             </>
           )}
 
-          {/* Grid de cards (1 no mobile, 3 no desktop) */}
           <div className="grid gap-6 lg:grid-cols-3">
             {visibleTestimonials.map((t) => (
               <article
                 key={t.id}
                 className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow transition hover:shadow-md border border-transparent"
               >
-                {/* Ícone de citação decorativo */}
                 <div className="absolute -top-3 -left-2 opacity-10" aria-hidden>
                   <Quote size={80} />
                 </div>
 
-                {/* Conteúdo */}
                 <div className="relative">
-                  {/* Estrelas */}
                   <div className="mb-3 flex items-center gap-0.5" aria-label={`${t.rating} de 5`}>
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
@@ -265,10 +251,9 @@ export function TestimonialsVip() {
                   </div>
 
                   <p className="text-sm md:text-base leading-relaxed">
-                    “{t.content}”
+                    "{t.content}"
                   </p>
 
-                  {/* Cliente */}
                   <div className="mt-5 flex items-center gap-3">
                     <div
                       className="flex h-10 w-10 items-center justify-center rounded-full font-semibold"
@@ -284,7 +269,6 @@ export function TestimonialsVip() {
                   </div>
                 </div>
 
-                {/* Hover gradient */}
                 <div
                   className="pointer-events-none absolute inset-x-0 bottom-0 h-16 opacity-0 transition-opacity group-hover:opacity-100"
                   style={{
@@ -298,7 +282,6 @@ export function TestimonialsVip() {
           </div>
         </div>
 
-        {/* Navegação mobile (setas abaixo) */}
         {isMobile && (
           <div className="mt-4 flex items-center justify-center gap-3">
             <button
@@ -320,7 +303,6 @@ export function TestimonialsVip() {
           </div>
         )}
 
-        {/* Dots */}
         <div className="mt-4 flex items-center justify-center gap-2">
           {testimonials.map((_, i) => {
             const active = i === currentIndex;
@@ -338,8 +320,7 @@ export function TestimonialsVip() {
           })}
         </div>
 
-        {/* Métricas de prova social (mesmo padrão do seu componente atual) */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
           <div className="rounded-2xl bg-white p-4 text-center shadow">
             <p className="text-2xl font-bold" style={{ color: COLORS.primary }}>
               4.9/5

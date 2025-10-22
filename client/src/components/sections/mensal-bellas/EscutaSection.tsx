@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { Sparkles, HeartHandshake, MessageCircle } from "lucide-react";
 
-// Paleta do documento
 const COLORS = {
   lilacBg: "#F6EDF9",
   gold: "#C7A45C",
@@ -22,7 +21,6 @@ export function EscutaSection() {
       style={{ backgroundColor: COLORS.lilacBg, color: COLORS.text }}
     >
       <div className="container mx-auto px-4">
-        {/* Chip de contexto no padrão visual */}
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
@@ -37,7 +35,6 @@ export function EscutaSection() {
           </span>
         </div>
 
-        {/* Título e subtítulo */}
         <header
           className={[
             "mx-auto mt-4 max-w-3xl text-center transition-all duration-700",
@@ -56,19 +53,17 @@ export function EscutaSection() {
           </p>
         </header>
 
-        {/* Card principal */}
-        <article className="mt-6 rounded-2xl bg-white p-6 shadow border border-transparent">
+        <article className="mt-6 rounded-2xl bg-white p-6 shadow border border-transparent max-w-3xl mx-auto">
           <div className="grid gap-6 md:grid-cols-[auto_1fr] md:items-start">
-            {/* Ícone em chip */}
             <div
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full mx-auto md:mx-0"
               style={{ backgroundColor: "#F6EDF9", color: COLORS.primary }}
               aria-hidden
             >
               <HeartHandshake size={22} />
             </div>
 
-            <div>
+            <div className="text-center md:text-left">
               <h3 className="text-lg font-semibold">Acolhimento de verdade</h3>
               <p className="mt-2 text-sm opacity-90">
                 Cada assinante tem acesso à escuta empática com a Luzinete ou uma colaboradora do Bellas, em um espaço reservado e seguro.
