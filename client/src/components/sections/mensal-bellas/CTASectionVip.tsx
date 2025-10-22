@@ -129,30 +129,14 @@ export function CTASectionVip({
             style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
           >
             <a
-              href={buildWAUrl(whatsappMessage, {
-                utm_source: "site",
-                utm_medium: "mensal-bellas",
-                utm_content: "cta_whatsapp",
-              })}
-              aria-label="Falar no WhatsApp para assinar o Programa Mulheres VIP Bellas"
+              href="https://wa.me/5511976820135?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20do%20Programa%20Mulheres%20VIP%20Bellas."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full max-w-xl items-center justify-center rounded-lg px-6 py-4 text-base font-semibold shadow transition focus-visible:ring-2"
+              style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
+              aria-label="Quero viver o meu dia de estrela — entrar no Grupo VIP no WhatsApp"
             >
-              {primaryLabel}
-              <ArrowRight className="ml-2" size={16} />
-            </a>
-          </Button>
-
-          <Button
-            asChild
-            variant="outline"
-            className="w-full sm:w-auto border"
-            style={{
-              borderColor: COLORS.primary,
-              color: COLORS.primary,
-              backgroundColor: "#FFFFFF",
-            }}
-          >
-            <a href="#planos" aria-label="Ver os planos do Programa Mulheres VIP Bellas">
-              {secondaryLabel}
+              Quero viver o meu dia de estrela!
             </a>
           </Button>
         </div>
