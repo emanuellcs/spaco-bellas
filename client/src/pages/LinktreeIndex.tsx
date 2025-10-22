@@ -56,19 +56,35 @@ const links: LinkItem[] = [
 export default function LinktreeLanding() {
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 flex flex-col items-center px-4 py-8 font-sans">
-      {/* Profile Section */}
-      <div className="flex flex-col items-center mb-10">
-        <div className="w-36 h-36 rounded-full overflow-hidden mb-5 ring-4 ring-pink-400 shadow-xl">
+      {/* Hero Section com Background */}
+      <div className="relative w-full mb-12">
+        {/* Background Image Layer */}
+        <div className="absolute inset-0 h-[500px] overflow-hidden">
           <img
-            src={spacoBellasLogo}
-            alt="Spaço Bellas"
-            className="w-full h-full object-cover"
+            src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&h=800&fit=crop"
+            alt=""
+            className="w-full h-full object-cover blur-[8px] scale-110"
           />
+          {/* Overlay Gradiente - Transição suave */}
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-pink-900/60 to-pink-50"></div>
         </div>
-        <h1 className="text-3xl font-bold mb-2 text-purple-800">Spaço Bellas</h1>
-        <p className="text-pink-600 text-center text-base font-medium">
-          Especialista em Beleza e Bem-Estar!
-        </p>
+        
+        {/* Content Layer */}
+        <div className="relative z-10 flex flex-col items-center pt-16 pb-20">
+          <div className="w-36 h-36 rounded-full overflow-hidden mb-5 ring-4 ring-white shadow-2xl">
+            <img
+              src={spacoBellasLogo}
+              alt="Spaço Bellas"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <h1 className="text-4xl font-bold mb-2 text-white drop-shadow-2xl">
+            Spaço Bellas
+          </h1>
+          <p className="text-pink-100 text-center text-lg font-semibold drop-shadow-lg">
+            Especialista em Beleza e Bem-Estar!
+          </p>
+        </div>
       </div>
 
       {/* Banners Section */}
