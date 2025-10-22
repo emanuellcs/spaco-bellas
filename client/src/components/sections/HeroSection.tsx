@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import heroImage from "@assets/generated_images/Luxury_spa_treatment_room_eeed824b.png";
 
 const WHATSAPP_NUMBER = "5511976820135";
-const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de agendar minha experiência no Spaço Bellas.");
+const WHATSAPP_MESSAGE = "Olá!%20Quero%20conhecer%20o%20Spa%20Day%20das%20Celebridades%20e%20viver%20meu%20dia%20de%20estrela!";
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,94 +15,88 @@ export function HeroSection() {
 
   return (
     <>
-      <section
+      {/* Background Image */}
+      <div
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${heroImage})`,
           }}
-        >
-          {/* Overlay with gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
-        </div>
+        />
+
+        {/* Overlay with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 py-20 md:py-0">
           <div
-            className={`space-y-8 transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            className={`space-y-6 md:space-y-8 transition-all duration-1000 text-center ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-              <Sparkles className="w-4 h-4 text-white" />
-              <span className="text-sm font-medium text-white uppercase tracking-wider">
-                Spaço Bellas
-              </span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 sm:px-6 py-2 sm:py-3 text-white text-sm sm:text-base">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--primary-purple)]" />
+              <span className="font-medium">Spa Day das Celebridades</span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-white leading-tight">
-              Seu refúgio de luxo
-              <br />
-              e bem-estar em São Paulo
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight px-2">
+              Viva o seu dia de estrela
             </h1>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-              Descubra uma experiência única de autocuidado e transformação. Day Spa, massagens, tratamentos estéticos e muito mais.
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">
+              Uma experiência única que combina beleza, relaxamento e o luxo que você merece.
             </p>
 
             {/* CTA Button */}
-            <div className="flex justify-center pt-4">
+            <div className="pt-2 flex justify-center">
               <Button
-                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
-                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                onClick={() =>
+                  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")
+                }
+                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 max-w-sm sm:max-w-none"
                 size="lg"
               >
-                <Sparkles className="w-5 h-5 mr-2" />
-                Agende sua Experiência
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Quero viver minha experiência
               </Button>
             </div>
 
             {/* Stats */}
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto pt-12 transition-all duration-1000 delay-300 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
-              <div className="space-y-1">
-                <div className="text-3xl font-bold text-white">2.500+</div>
-                <div className="text-sm text-white/80">Clientes Satisfeitas</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 pt-8 sm:pt-12 max-w-3xl mx-auto">
+              <div className="space-y-1 sm:space-y-2">
+                <div className="text-3xl sm:text-4xl font-bold text-white">2.500+</div>
+                <div className="text-sm sm:text-base text-white/80">Clientes Satisfeitas</div>
               </div>
-              <div className="space-y-1">
-                <div className="text-3xl font-bold text-white">4.9/5</div>
-                <div className="text-sm text-white/80">Avaliação Média</div>
+              <div className="space-y-1 sm:space-y-2">
+                <div className="text-3xl sm:text-4xl font-bold text-white">4.9/5</div>
+                <div className="text-sm sm:text-base text-white/80">Avaliação Média</div>
               </div>
-              <div className="space-y-1">
-                <div className="text-3xl font-bold text-white">10 anos</div>
-                <div className="text-sm text-white/80">De Excelência</div>
+              <div className="space-y-1 sm:space-y-2">
+                <div className="text-3xl sm:text-4xl font-bold text-white">10 anos</div>
+                <div className="text-sm sm:text-base text-white/80">De Excelência</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll Down Button */}
+        {/* Scroll Down Button - Oculto no mobile */}
         <button
           onClick={() => {
             document.getElementById("introduction")?.scrollIntoView({ behavior: "smooth" });
           }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-all duration-300 group"
+          className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 text-white/80 hover:text-white transition-all duration-300 group"
           aria-label="Rolar para baixo"
         >
-          <span className="text-sm font-medium uppercase tracking-wider">Explore</span>
+          <span className="text-sm font-medium">Explore</span>
           <ChevronDown className="w-6 h-6 animate-bounce" />
         </button>
-      </section>
+      </div>
     </>
   );
 }
