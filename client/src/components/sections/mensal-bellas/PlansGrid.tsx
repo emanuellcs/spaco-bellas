@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Crown, Sparkles } from "lucide-react";
 
-const COLORS = {
-  lilacBg: "#F6EDF9",
-  gold: "#C7A45C",
-  text: "#2F2F2F",
-  primary: "#8E5BAE",
-};
+// Imagens locais por plano
+import imgEssencial from "./assets/plansgrid/essencial.jpg";
+import imgRelax from "./assets/plansgrid/relax.jpg";
+import imgCelebridade from "./assets/plansgrid/luxuryspa.jpeg";
+import imgRoyal from "./assets/plansgrid/royal.jpg";
+import imgInfinity from "./assets/plansgrid/infinity.jpg";
 
+const COLORS = { lilacBg: "#F6EDF9", gold: "#C7A45C", text: "#2F2F2F", primary: "#8E5BAE" };
 const WHATSAPP_NUMBER = "5511976820135";
 const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -17,9 +18,7 @@ const buildWAUrl = (msg: string, utm?: Record<string, string>) => {
   if (utm) Object.entries(utm).forEach(([k, v]) => params.append(k, v));
   return `${base}?${params.toString()}`;
 };
-
-const MSG_MENSAL_VIP =
-  "Olá! Quero conhecer o Programa Mulheres VIP Bellas e ver os planos.";
+const MSG_MENSAL_VIP = "Olá! Quero conhecer o Programa Mulheres VIP Bellas e ver os planos.";
 
 type PlanId = "essencial" | "relax" | "celebridade" | "royal" | "infinity";
 type Plan = {
@@ -30,6 +29,15 @@ type Plan = {
   highlight?: boolean;
   badge?: string;
   note?: string;
+};
+
+// Mapeamento imagem por plano
+const PLAN_IMAGES: Record<PlanId, string> = {
+  essencial: imgEssencial,
+  relax: imgRelax,
+  celebridade: imgCelebridade,
+  royal: imgRoyal,
+  infinity: imgInfinity,
 };
 
 const PLANS: Plan[] = [
@@ -102,9 +110,64 @@ export function PlansGrid() {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
-  // Separar em duas linhas: 3 primeiros cards / 2 últimos cards
   const firstRow = PLANS.slice(0, 3);
   const secondRow = PLANS.slice(3, 5);
+
+  const Card = (p: Plan) => (
+    <article
+      key={p.id}
+      className={[
+        "flex flex-col rounded-2xl bg-white p-6 shadow border transition",
+        p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
+      ].join(" ")}
+      aria-label={`Plano ${p.name}`}
+    >
+      <img src={PLAN_IMAGES[p.id]} alt="" className="mb-4 h-32 w-full rounded-xl object-cover" loading="lazy" />
+      <header className="mb-4">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-xl font-semibold">{p.name}</h3>
+          {p.badge && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
+              {p.badge === "VIP" ? <Crown size={14} /> : null}
+              {p.badge}
+            </span>
+          )}
+        </div>
+        <p className="mt-2 text-3xl font-bold">
+          {brl(p.price)}
+          <span className="text-base font-medium">/mês</span>
+        </p>
+      </header>
+
+      <ul className="space-y-2 flex-grow">
+        {p.bullets.map((b, i) => (
+          <li key={i} className="flex items-start gap-2">
+            <Check className="mt-1 text-[#8E5BAE] flex-shrink-0" size={18} aria-hidden />
+            <span className="text-sm">{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {p.note && <p className="mt-3 text-xs opacity-70">{p.note}</p>}
+
+      <Button
+        asChild
+        className="mt-6 w-full"
+        style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
+      >
+        <a
+          href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
+            utm_source: "site",
+            utm_medium: "mensal-bellas",
+            utm_content: `plan_${p.id}`,
+          })}
+          aria-label={`Quero o plano ${p.name}`}
+        >
+          Quero este plano
+        </a>
+      </Button>
+    </article>
+  );
 
   return (
     <section
@@ -117,11 +180,7 @@ export function PlansGrid() {
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
-            style={{
-              backgroundColor: "#FAF8FB",
-              color: COLORS.primary,
-              border: `1px solid ${COLORS.primary}20`,
-            }}
+            style={{ backgroundColor: "#FAF8FB", color: COLORS.primary, border: `1px solid ${COLORS.primary}20` }}
           >
             <Sparkles size={14} />
             Escolha seu momento VIP
@@ -146,130 +205,12 @@ export function PlansGrid() {
           </p>
         </header>
 
-        {/* Container centralizado */}
         <div className="mt-6 max-w-7xl mx-auto">
-          {/* Primeira linha: 3 cards */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-            {firstRow.map((p) => (
-              <article
-                key={p.id}
-                className={[
-                  "flex flex-col rounded-2xl bg-white p-6 shadow border transition",
-                  p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
-                ].join(" ")}
-                aria-label={`Plano ${p.name}`}
-              >
-                <header className="mb-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xl font-semibold">{p.name}</h3>
-                    {p.badge && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
-                        {p.badge === "VIP" ? <Crown size={14} /> : null}
-                        {p.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2 text-3xl font-bold">
-                    {brl(p.price)}
-                    <span className="text-base font-medium">/mês</span>
-                  </p>
-                </header>
-
-                <ul className="space-y-2 flex-grow">
-                  {p.bullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <Check className="mt-1 text-[#8E5BAE] flex-shrink-0" size={18} aria-hidden />
-                      <span className="text-sm">{b}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {p.note && (
-                  <p className="mt-3 text-xs opacity-70">
-                    {p.note}
-                  </p>
-                )}
-
-                <Button
-                  asChild
-                  className="mt-6 w-full"
-                  style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
-                >
-                  <a
-                    href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
-                      utm_source: "site",
-                      utm_medium: "mensal-bellas",
-                      utm_content: `plan_${p.id}`,
-                    })}
-                    aria-label={`Quero o plano ${p.name}`}
-                  >
-                    Quero este plano
-                  </a>
-                </Button>
-              </article>
-            ))}
+            {firstRow.map(Card)}
           </div>
-
-          {/* Segunda linha: 2 cards centralizados */}
           <div className="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
-            {secondRow.map((p) => (
-              <article
-                key={p.id}
-                className={[
-                  "flex flex-col rounded-2xl bg-white p-6 shadow border transition",
-                  p.highlight ? "ring-2 ring-[#8E5BAE]" : "border-transparent hover:shadow-md",
-                ].join(" ")}
-                aria-label={`Plano ${p.name}`}
-              >
-                <header className="mb-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xl font-semibold">{p.name}</h3>
-                    {p.badge && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#F6EDF9] px-3 py-1 text-xs text-[#8E5BAE]">
-                        {p.badge === "VIP" ? <Crown size={14} /> : null}
-                        {p.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2 text-3xl font-bold">
-                    {brl(p.price)}
-                    <span className="text-base font-medium">/mês</span>
-                  </p>
-                </header>
-
-                <ul className="space-y-2 flex-grow">
-                  {p.bullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <Check className="mt-1 text-[#8E5BAE] flex-shrink-0" size={18} aria-hidden />
-                      <span className="text-sm">{b}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {p.note && (
-                  <p className="mt-3 text-xs opacity-70">
-                    {p.note}
-                  </p>
-                )}
-
-                <Button
-                  asChild
-                  className="mt-6 w-full"
-                  style={{ backgroundColor: COLORS.primary, color: "#FFFFFF" }}
-                >
-                  <a
-                    href={buildWAUrl(`${MSG_MENSAL_VIP} | plano=${p.id}`, {
-                      utm_source: "site",
-                      utm_medium: "mensal-bellas",
-                      utm_content: `plan_${p.id}`,
-                    })}
-                    aria-label={`Quero o plano ${p.name}`}
-                  >
-                    Quero este plano
-                  </a>
-                </Button>
-              </article>
-            ))}
+            {secondRow.map(Card)}
           </div>
         </div>
 

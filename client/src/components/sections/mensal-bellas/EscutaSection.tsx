@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { Sparkles, HeartHandshake, MessageCircle } from "lucide-react";
 
-const COLORS = {
-  lilacBg: "#F6EDF9",
-  gold: "#C7A45C",
-  text: "#2F2F2F",
-  primary: "#8E5BAE",
-};
+// Imagens locais
+import imgAcolhedor from "./assets/escuta/acolhedor.jpg";
+// Caso queira usar também a secundária depois:
+// import imgAromaterapia from "./assets/escuta/aromaterapia.jpg";
+
+const COLORS = { lilacBg: "#F6EDF9", gold: "#C7A45C", text: "#2F2F2F", primary: "#8E5BAE" };
 
 export function EscutaSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,11 +24,7 @@ export function EscutaSection() {
         <div className="flex w-full items-center justify-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs"
-            style={{
-              backgroundColor: "#FAF8FB",
-              color: COLORS.primary,
-              border: `1px solid ${COLORS.primary}20`,
-            }}
+            style={{ backgroundColor: "#FAF8FB", color: COLORS.primary, border: `1px solid ${COLORS.primary}20` }}
           >
             <Sparkles size={14} />
             Acolhimento que abraça
@@ -53,18 +49,25 @@ export function EscutaSection() {
           </p>
         </header>
 
-        <article className="mt-6 rounded-2xl bg-white p-6 shadow border border-transparent max-w-3xl mx-auto">
-          <div className="grid gap-6 md:grid-cols-[auto_1fr] md:items-start">
-            <div
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full mx-auto md:mx-0"
-              style={{ backgroundColor: "#F6EDF9", color: COLORS.primary }}
-              aria-hidden
-            >
-              <HeartHandshake size={22} />
-            </div>
+        <article className="mt-6 rounded-2xl bg-white shadow border border-transparent overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <img
+              src={imgAcolhedor}
+              alt="Ambiente acolhedor do Espaço Escuta"
+              className="h-56 w-full object-cover md:h-full"
+              loading="lazy"
+            />
+            <div className="p-6">
+              <div className="flex items-center gap-3">
+                <div
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "#F6EDF9", color: COLORS.primary }}
+                >
+                  <HeartHandshake size={22} />
+                </div>
+                <h3 className="text-lg font-semibold">Acolhimento de verdade</h3>
+              </div>
 
-            <div className="text-center md:text-left">
-              <h3 className="text-lg font-semibold">Acolhimento de verdade</h3>
               <p className="mt-2 text-sm opacity-90">
                 Cada assinante tem acesso à escuta empática com a Luzinete ou uma colaboradora do Bellas, em um espaço reservado e seguro.
               </p>
