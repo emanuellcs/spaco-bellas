@@ -53,7 +53,7 @@ const links: LinkItem[] = [
     id: "celebridades",
     title: "SPA DAS CELEBRIDADES",
     subtitle: "Viva seu Dia de Estrela",
-    href: "/celebridades",
+    href: "/spa-celebridades",
     backgroundImage: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=400&fit=crop",
     textPosition: "left",
     Icon: FaStar,
