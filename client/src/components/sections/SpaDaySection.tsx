@@ -5,6 +5,15 @@ import { useEffect, useRef, useState } from "react";
 
 const WHATSAPP_NUMBER = "5511976820135";
 
+const WHATSAPP_LINKS: Record<string, string> = {
+  estrela:
+    "https://wa.me/5511976820135?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Dia%20de%20Estrela!",
+  diva:
+    "https://wa.me/5511976820135?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Dia%20de%20Diva!",
+  rainha:
+    "https://wa.me/5511976820135?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Dia%20de%20Rainha!",
+};
+
 // Pacotes do Spa Day das Celebridades
 const packages = [
   {
@@ -94,9 +103,9 @@ export function SpaDaySection() {
     return () => observer.disconnect();
   }, []);
 
-  const handleWhatsAppClick = (packageName: string, price: string) => {
-    const message = `Olá!%20Quero%20reservar%20o%20${packageName}%20(R$%20${price})%20e%20viver%20meu%20dia%20de%20celebridade!`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+  const handleWhatsAppClick = (id: string) => {
+    const url = WHATSAPP_LINKS[id];
+    if (url) window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -207,29 +216,35 @@ export function SpaDaySection() {
 
                   {/* CTA Button */}
                   <Button
-                    onClick={() => handleWhatsAppClick(pkg.tier, pkg.price)}
-                    className={`w-full font-medium shadow-lg transition-all duration-300 cursor-pointer ${
+                    asChild
+                    className={`w-full font-medium shadow-lg transition-all duration-300 cursor-pointer pointer-events-auto relative z-50 ${
                       pkg.featured
                         ? `bg-gradient-to-r ${pkg.color} hover:shadow-2xl hover:scale-105 text-white`
                         : "bg-white border-2 border-[var(--primary-purple)] text-[var(--primary-purple)] hover:bg-[var(--primary-purple)] hover:text-white"
                     }`}
                     size="lg"
                   >
-                    {pkg.featured ? (
-                      <>
-                        <Heart className="w-4 h-4 mr-2" />
-                        Quero ser Rainha
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-4 h-4 mr-2" />
-                        Reservar Agora
-                      </>
-                    )}
+                    <a 
+                      href={WHATSAPP_LINKS[pkg.id]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {pkg.featured ? (
+                        <>
+                          <Heart className="w-4 h-4 mr-2" />
+                          Quero ser Rainha
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4 mr-2" />
+                          Reservar Agora
+                        </>
+                      )}
+                    </a>
                   </Button>
 
                   {/* Animated border on hover */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[var(--primary-purple)]/30 rounded-lg transition-colors duration-300 pointer-events-none" />
+                  <div className="pointer-events-none absolute inset-0 border-2 border-transparent group-hover:border-[var(--primary-purple)]/30 rounded-lg transition-colors duration-300 pointer-events-none" />
                 </CardContent>
               </Card>
             );
