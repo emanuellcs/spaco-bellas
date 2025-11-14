@@ -1,19 +1,17 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ChevronDown } from "lucide-react";
-import { useState } from "react";
-
-const WHATSAPP_NUMBER = "5511976820135";
-
-const FAQ_WHATSAPP_LINK =
-  "https://wa.me/5511976820135?text=Ol%C3%A1!%20Quero%20meu%20dia%20de%20princesa%20no%20Spa%20das%20Celebridades!";
+import { Sparkles, HelpCircle, ChevronDown } from "lucide-react";
 
 type FaqItem = {
   question: string;
   answer: string;
 };
 
-const faqs: FaqItem[] = [
+const WHATSAPP_NUMBER = "5511976820135";
+const WHATSAPP_FAQ_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20tirar%20d%C3%BAvidas%20sobre%20o%20Spa%20Day%20das%20Celebridades.`;
+
+const FAQ_ITEMS: FaqItem[] = [
   {
     question: "POSSO IR EM DUAS PESSOAS?",
     answer:
@@ -42,100 +40,158 @@ const faqs: FaqItem[] = [
 ];
 
 export function FAQSpaDay() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [showBonusDetails, setShowBonusDetails] = useState(false);
+
+  const handleWhatsappClick = () => {
+    window.open(WHATSAPP_FAQ_LINK, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <section
       id="faq-spa-day"
-      className="relative py-16 md:py-24 bg-white overflow-hidden"
+      className="relative w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10"
     >
-      {/* Fundo suave para manter estilo visual */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-purple-100 rounded-full filter blur-3xl opacity-20 -translate-x-10 -translate-y-16" />
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-100 rounded-full filter blur-3xl opacity-20 translate-x-10 translate-y-16" />
+      {/* Cabeçalho da seção */}
+      <header className="text-center max-w-2xl mx-auto space-y-3">
 
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-purple-100 rounded-full px-4 sm:px-6 py-2 mb-4">
-            <Sparkles className="w-4 h-4 text-[var(--primary-purple)]" />
-            <span className="text-sm font-medium text-[var(--primary-purple)]">
-              Dúvidas sobre o Spa das Celebridades
-            </span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-semibold tracking-tight">
+          Tire suas dúvidas
+        </h2>
+
+        <p className="text-sm sm:text-base leading-relaxed text-zinc-700">
+          Entenda como funcionam os bônus, regras de agendamento e tudo que
+          você precisa saber para aproveitar o seu Spa Day com tranquilidade.
+        </p>
+      </header>
+
+      {/* Bloco de bônus / oferta especial, coeso com os cards de pacote */}
+      <Card className="border-[var(--primary-purple)]/25 bg-gradient-to-br from-white via-[#fff9fd] to-purple-50/40 shadow-lg">
+        <CardContent className="p-6 sm:p-8 flex flex-col items-center text-center space-y-6">
+          {/* Cabeçalho do bônus */}
+          <div className="flex flex-col items-center gap-2 max-w-2xl">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary-purple)]/10 text-[var(--primary-purple)]">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg sm:text-xl font-semibold text-zinc-900">
+              Bônus para as 10 primeiras em novembro
+            </h3>
+            <p className="text-base leading-relaxed text-zinc-800">
+              As 10 primeiras pessoas que fecharem o Spa Day em novembro ganham
+              design de sobrancelhas e 1 spa dos pés extra para usar em até 30 dias
+              ou presentear alguém especial.
+            </p>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Perguntas frequentes e benefícios especiais
-          </h2>
+          {/* Benefícios e regras */}
+          <div className="grid gap-6 sm:grid-cols-2 w-full max-w-3xl text-base leading-relaxed text-zinc-800">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-[var(--primary-purple)]">
+                O que você ganha
+              </p>
+              <div className="rounded-xl border border-[var(--primary-purple)]/20 bg-white/70 p-4 text-sm leading-relaxed text-zinc-700 space-y-1">
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Design de sobrancelhas incluso na sua experiência.</li>
+                  <li>1 spa dos pés extra para usar em até 30 dias ou dar de presente.</li>
+                  <li>
+                    10% de desconto na próxima visita ou um voucher para você ou uma amiga.
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-          <p className="text-sm sm:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            As 10 primeiras pessoas que fecharem em novembro vão ganhar design
-            de sobrancelhas + 1 spa dos pés adicional para usar em até 30 dias
-            ou presentear alguém.
-          </p>
-          <p className="text-xs sm:text-sm text-gray-500 max-w-3xl mx-auto mt-2">
-            Além disso, você garante 10% de desconto na próxima vez que vier ou
-            pode liberar o voucher para você ou uma amiga. Válido por 30 dias
-            para marcação, não precisa consumir nesse prazo, mas é necessário
-            deixar marcado com sinal de 20%.
-          </p>
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-600">
+                Regras rápidas
+              </p>
+              <div className="rounded-xl border border-[var(--primary-purple)]/20 bg-white/70 p-4 text-sm leading-relaxed text-zinc-700 space-y-1">
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Válido para as 10 primeiras pessoas que fecharem em novembro.</li>
+                  <li>
+                    Voucher válido por 30 dias para marcação (não precisa consumir
+                    dentro desse prazo, apenas agendar).
+                  </li>
+                  <li>
+                    É necessário deixar um sinal de 20% para garantir sua vaga e os
+                    benefícios.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-          <div className="mt-6 flex justify-center">
-            <Button
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-base rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              size="lg"
-              asChild
+          <Button
+            type="button"
+            onClick={handleWhatsappClick}
+            className="w-full sm:w-auto rounded-full bg-emerald-500 text-white text-base font-semibold px-8 py-3 shadow-lg hover:bg-emerald-600 transition-colors"
+          >
+            Quero meu dia de princesa
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Seção de perguntas frequentes */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="h-9 w-9 flex items-center justify-center rounded-full bg-[var(--primary-purple)]/10 text-[var(--primary-purple)]">
+            <HelpCircle className="h-4 w-4" />
+          </div>
+          <div>
+            <h3 className="text-lg sm:text-xl font-semibold text-zinc-900">
+              Perguntas frequentes
+            </h3>
+            <p className="text-sm text-zinc-700">
+              Veja as dúvidas mais comuns antes de agendar seu Dia de Estrela,
+              Rainha ou Diva.
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((item: FaqItem, index: number) => (
+            <Card
+              key={index}
+              className="border-[var(--primary-purple)]/15 bg-white/80 shadow-sm hover:shadow-md transition-shadow"
             >
-              <a
-                href={FAQ_WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Quero meu dia de princesa
-              </a>
-            </Button>
-          </div>
-        </div>
-
-        {/* FAQ list */}
-        <div className="space-y-4">
-          {faqs.map((item, index) => {
-            const isOpen = openIndex === index;
-
-            return (
-              <Card
-                key={index}
-                className={`border border-[var(--primary-purple)]/15 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer ${
-                  isOpen ? "bg-purple-50/40" : "bg-white/80"
-                }`}
-                onClick={() =>
-                  setOpenIndex(isOpen ? null : index)
-                }
-              >
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-900 text-left">
+              <CardContent className="p-3 sm:p-4">
+                <details className="group">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+                    <span className="text-sm sm:text-base font-medium text-zinc-900 text-left">
                       {item.question}
-                    </h3>
-                    <div
-                      className={`flex items-center justify-center w-8 h-8 rounded-full border border-[var(--primary-purple)]/30 text-[var(--primary-purple)] bg-white transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
+                    </span>
+                    <span className="shrink-0 flex items-center gap-1 text-[11px] text-[var(--primary-purple)]">
+                      <span className="group-open:hidden">Ver resposta</span>
+                      <span className="hidden group-open:inline">Fechar</span>
+                      <ChevronDown
+                        className="h-3 w-3 transition-transform group-open:rotate-180"
+                      />
+                    </span>
+                  </summary>
+                  <div className="mt-2 text-sm leading-relaxed text-zinc-700">
+                    {item.answer}
                   </div>
-
-                  {isOpen && (
-                    <p className="mt-3 text-xs sm:text-sm text-gray-700 text-left leading-relaxed">
-                      {item.answer}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
+                </details>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </div>
+      </section>
+
+      {/* CTA final, para manter o mesmo fluxo da SpaDaySection */}
+      <section className="pt-4 border-t border-[var(--primary-purple)]/10">
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <p className="text-sm leading-relaxed text-zinc-700">
+            Se ainda ficou alguma dúvida depois de ler o FAQ, a equipe está
+            pronta para te ajudar no WhatsApp.
+          </p>
+          <Button
+            type="button"
+            onClick={handleWhatsappClick}
+            className="w-full sm:w-auto rounded-full bg-emerald-500 text-white text-sm font-semibold px-6 py-3 shadow-lg hover:bg-emerald-600/90 transition-colors"
+          >
+            Tirar dúvidas no WhatsApp
+          </Button>
+        </div>
+      </section>
     </section>
   );
 }

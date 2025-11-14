@@ -132,58 +132,8 @@ export function SpaDaySection() {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200 rounded-full filter blur-3xl opacity-20 translate-x-12 translate-y-12" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-20 md:mb-16">
-          <div className="inline-flex items-center gap-2 bg-purple-100 rounded-full px-4 sm:px-6 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-[var(--primary-purple)]" />
-            <span className="text-sm font-medium text-[var(--primary-purple)]">
-              Spa Day das Celebridades
-            </span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 md:mb-6 px-4">
-            Viva um dia de princesa com banheira, massagem e cuidados de
-            celebridade — tudo sem sair de São Paulo 💜
-          </h2>
-
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-            Transforme o cansaço em brilho com o novo Spa das Celebridades —
-            pacotes exclusivos para mulheres que merecem um recomeço.
-          </p>
-
-          {/* CTA principal do hero */}
-          <div className="mt-8 flex justify-center">
-            <Button
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              size="lg"
-              asChild
-            >
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Quero%20relaxar%20agora%20no%20Spa%20das%20Celebridades!`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Quero relaxar agora!
-              </a>
-            </Button>
-          </div>
-
-          {/* Destaque para o vídeo estilo VSL */}
-          <div className="mt-10 mb-20 md:mb-24 max-w-3xl mx-auto">
-            <div className="aspect-video rounded-2xl border border-purple-100 bg-white/60 backdrop-blur-sm shadow-lg overflow-hidden">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/LXb3EKWsInQ?si=akjU1MXZr8ODjoSE"
-                title="Spa das Celebridades - VSL"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-
         {/* Packages grid */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-4 mb-12 md:mb-16">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-4 mb-20 md:mb-24">
           {packages.map((pkg, index) => {
             const IconComponent = pkg.icon;
 
@@ -314,18 +264,18 @@ export function SpaDaySection() {
         </div>
 
         {/* Additional info + disclaimer do roupão */}
-        <div className="text-center text-gray-600 text-xs sm:text-sm px-4 mt-4">
+        <div className="text-center text-gray-600 text-xl sm:text-lg px-4 mt-8">
           <p className="flex items-center justify-center gap-2 flex-wrap mb-2">
             <Sparkles className="w-4 h-4 text-[var(--primary-purple)]" />
             <span>
               Todos os pacotes incluem roupão personalizado e ambiente exclusivo.
             </span>
           </p>
-          <p className="text-[0.7rem] sm:text-xs text-gray-500 mb-1">
+          <p className="text-[0.7rem] sm:text-base text-gray-500 mb-1">
             Roupão personalizado disponível para uso durante a experiência (não
             incluso para levar embora).
           </p>
-          <p className="text-[0.75rem] sm:text-xs text-gray-500 mt-1">
+          <p className="text-[0.75rem] sm:text-base text-gray-500 mt-1">
             Agendamento via WhatsApp • Experiência inesquecível garantida 💜
           </p>
         </div>
