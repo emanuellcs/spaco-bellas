@@ -1,197 +1,266 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { ChevronDown, Heart, Sparkles, Shield, Clock, Gift, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sparkles, HelpCircle, ChevronDown } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
-type FaqItem = {
+type FAQItem = {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 };
 
-const WHATSAPP_NUMBER = "5511976820135";
-const WHATSAPP_FAQ_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20tirar%20d%C3%BAvidas%20sobre%20o%20Spa%20Day%20das%20Celebridades.`;
-
-const FAQ_ITEMS: FaqItem[] = [
+const faqData: FAQItem[] = [
   {
-    question: "POSSO IR EM DUAS PESSOAS?",
-    answer:
-      "Sim, a segunda pessoa paga 50% do valor para irem juntas.",
+    question: "Como sei qual Dia escolher?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Escolha com o coração, linda! Cada Dia foi pensado para um momento diferente da sua vida:
+        </p>
+        <ul className="space-y-3 text-gray-600">
+          <li className="flex items-start gap-3 text-base sm:text-lg">
+            <Heart className="mt-1 h-5 w-5 text-purple-500" />
+            <span><strong>Estrela</strong> - Para aquele dia que você precisa de um cuidado essencial e renovador</span>
+          </li>
+          <li className="flex items-start gap-3 text-base sm:text-lg">
+            <Heart className="mt-1 h-5 w-5 text-purple-500" />
+            <span><strong>Diva</strong> - Quando você quer se sentir poderosa e radiante de cuidados</span>
+          </li>
+          <li className="flex items-start gap-3 text-base sm:text-lg">
+            <Heart className="mt-1 h-5 w-5 text-purple-500" />
+            <span><strong>Rainha</strong> - Para o dia em que você merece ser tratada como a rainha que é</span>
+          </li>
+        </ul>
+        <p className="text-base font-medium text-purple-600 sm:text-lg">
+          Não se preocupe, nossa equipe te ajuda a escolher o perfeito no WhatsApp!
+        </p>
+      </div>
+    ),
   },
   {
-    question: "POSSO IR EM CASAL? POSSO LEVAR QUEM?",
-    answer:
-      "Sim! É livre, geralmente entre casal, mãe e filha, irmãs e amigas.",
+    question: "Quanto tempo dura cada experiência?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Tempo de qualidade para cuidar de você, sem pressa:
+        </p>
+        <ul className="space-y-3 text-gray-600">
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Clock className="h-5 w-5 text-pink-500" />
+            <span><strong>Dia de Estrela:</strong> 2 horas de puro cuidado</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Clock className="h-5 w-5 text-pink-500" />
+            <span><strong>Dia de Diva:</strong> 3 horas para brilhar</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Clock className="h-5 w-5 text-pink-500" />
+            <span><strong>Dia de Rainha:</strong> 4 horas de experiência completa</span>
+          </li>
+        </ul>
+        <p className="text-base text-gray-500 sm:text-lg">
+          Lembre-se: cada minuto é seu. Aproveite cada segundo dessa jornada de autocuidado.
+        </p>
+      </div>
+    ),
   },
   {
-    question: "POSSO IR APÓS O HORÁRIO DE TRABALHO, TEM FLEXIBILIDADE?",
-    answer:
-      "Sim! Combine previamente e podemos estender o horário de funcionamento.",
+    question: "Posso presentear alguém especial?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Que amor! Presentear uma mulher especial com um Spa Day é uma das formas mais lindas de dizer "eu te amo" ou "você merece ser cuidada".
+        </p>
+        <div className="rounded-2xl border border-purple-200 bg-purple-50 p-5">
+          <p className="text-base text-purple-700 sm:text-lg">
+            <strong>Dica especial:</strong> Cada voucher vem com uma mensagem personalizada escrita à mão. É emocionante ver o brilho nos olhos daquela pessoa que você ama!
+          </p>
+        </div>
+        <p className="text-base text-gray-600 sm:text-lg">
+          Basta falar com nossa equipe no WhatsApp que cuidamos de tudo para você.
+        </p>
+      </div>
+    ),
   },
   {
-    question: "POSSO PRESENTEAR ALGUÉM COM O SPA?",
-    answer:
-      "Sim, é ótimo para presentear alguém e a pessoa terá até 90 dias para fazer uso.",
+    question: "E se eu precisar remarcar?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          A vida da mulher moderna é cheia de surpresas, e nós entendemos perfeitamente! 
+        </p>
+        <ul className="space-y-3 text-gray-600">
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Shield className="h-5 w-5 text-purple-500" />
+            <span>Remarque com até 24h de antecedência, sem custo</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Shield className="h-5 w-5 text-purple-500" />
+            <span>Nossa equipe te ajuda a encontrar o melhor novo horário</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Shield className="h-5 w-5 text-purple-500" />
+            <span>Seu bem-estar vem sempre em primeiro lugar</span>
+          </li>
+        </ul>
+        <p className="text-base font-medium text-pink-600 sm:text-lg">
+          Não se sinta mal por remarcar. Cuidar de você também significa ter flexibilidade.
+        </p>
+      </div>
+    ),
   },
   {
-    question: "ALÉM DO SPA, POSSO FAZER O DIA DA NOIVA NO SPAÇO BELLAS?",
-    answer:
-      "Sim! No Spaço Bellas você tem total liberdade para vir com suas noivas e passar o dia relaxando antes do casamento.",
+    question: "O que preciso levar no dia?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Apenas você, sua energia positiva e vontade de ser cuidada! 
+        </p>
+        <div className="rounded-2xl border border-pink-200 bg-pink-50 p-5">
+          <p className="text-base text-pink-700 sm:text-lg">
+            <strong>Tudo incluso:</strong> Toalhas, produtos de qualidade, chá aromático, água infusa e aquele carinho que só nós sabemos dar.
+          </p>
+        </div>
+        <p className="text-base text-gray-600 sm:text-lg">
+          Se quiser, pode trazer sua playlist favorita ou um livro para ler durante o spa dos pés. Mas lembre-se: o objetivo é você desligar e se entregar ao momento.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Quais formas de pagamento vocês aceitam?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Facilitamos para que você não precise se preocupar com nada:
+        </p>
+        <ul className="grid grid-cols-1 gap-3 text-gray-600 sm:grid-cols-2">
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            <span>Cartão de crédito (até 12x)</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            <span>Pix (com desconto especial)</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            <span>Dinheiro</span>
+          </li>
+          <li className="flex items-center gap-3 text-base sm:text-lg">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            <span>Cartão de débito</span>
+          </li>
+        </ul>
+        <p className="text-base font-medium text-purple-600 sm:text-lg">
+          💰 O Pix tem 10% de desconto à vista — porque você merece ser reconhecida por cuidar de si!
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Posso trazer minha filha ou amiga?",
+    answer: (
+      <div className="space-y-4">
+        <p className="text-base text-gray-600 sm:text-lg">
+          Claro que sim! Cuidar de si é ainda mais especial quando compartilhamos com quem amamos.
+        </p>
+        <div className="rounded-2xl border border-purple-200 bg-purple-50 p-5">
+          <p className="text-base text-purple-700 sm:text-lg">
+            <strong>Programa Duas Bellas:</strong> Quando você agenda junto com uma amiga ou filha (a partir de 12 anos), cada uma ganha um spa dos pés bônus para usar depois. É nossa forma de celebrar a conexão feminina!
+          </p>
+        </div>
+        <p className="text-base text-gray-600 sm:text-lg">
+          Converse com nossa equipe no WhatsApp para agendar juntas e receber o benefício.
+        </p>
+      </div>
+    ),
   },
 ];
 
 export function FAQSpaDay() {
-  const [showBonusDetails, setShowBonusDetails] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const handleWhatsappClick = () => {
-    window.open(WHATSAPP_FAQ_LINK, "_blank", "noopener,noreferrer");
+  const toggleItem = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section
-      id="faq-spa-day"
-      className="relative w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10"
-    >
-      {/* Cabeçalho da seção */}
-      <header className="text-center max-w-2xl mx-auto space-y-3">
+    <section className="relative overflow-hidden bg-purple-100 py-16 sm:py-20 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -left-24 top-8 h-64 w-64 rounded-full bg-purple-300/20 blur-3xl" />
+        <div className="absolute -right-24 bottom-8 h-64 w-64 rounded-full bg-pink-300/20 blur-3xl" />
+      </div>
 
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-semibold tracking-tight">
-          Tire suas dúvidas
-        </h2>
-
-        <p className="text-sm sm:text-base leading-relaxed text-zinc-700">
-          Entenda como funcionam os bônus, regras de agendamento e tudo que
-          você precisa saber para aproveitar o seu Spa Day com tranquilidade.
-        </p>
-      </header>
-
-      {/* Bloco de bônus / oferta especial, coeso com os cards de pacote */}
-      <Card className="border-[var(--primary-purple)]/25 bg-gradient-to-br from-white via-[#fff9fd] to-purple-50/40 shadow-lg">
-        <CardContent className="p-6 sm:p-8 flex flex-col items-center text-center space-y-6">
-          {/* Cabeçalho do bônus */}
-          <div className="flex flex-col items-center gap-2 max-w-2xl">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary-purple)]/10 text-[var(--primary-purple)]">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-zinc-900">
-              Bônus para as 10 primeiras em novembro
-            </h3>
-            <p className="text-base leading-relaxed text-zinc-800">
-              As 10 primeiras pessoas que fecharem o Spa Day em novembro ganham
-              design de sobrancelhas e 1 spa dos pés extra para usar em até 30 dias
-              ou presentear alguém especial.
-            </p>
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-4 py-1 text-sm font-medium uppercase tracking-[0.2em] text-purple-600 sm:text-base">
+            <Shield className="h-4 w-4" />
+            Tudo que você precisa saber
           </div>
-
-          {/* Benefícios e regras */}
-          <div className="grid gap-6 sm:grid-cols-2 w-full max-w-3xl text-base leading-relaxed text-zinc-800">
-            <div className="space-y-2">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[var(--primary-purple)]">
-                O que você ganha
-              </p>
-              <div className="rounded-xl border border-[var(--primary-purple)]/20 bg-white/70 p-4 text-sm leading-relaxed text-zinc-700 space-y-1">
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Design de sobrancelhas incluso na sua experiência.</li>
-                  <li>1 spa dos pés extra para usar em até 30 dias ou dar de presente.</li>
-                  <li>
-                    10% de desconto na próxima visita ou um voucher para você ou uma amiga.
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-600">
-                Regras rápidas
-              </p>
-              <div className="rounded-xl border border-[var(--primary-purple)]/20 bg-white/70 p-4 text-sm leading-relaxed text-zinc-700 space-y-1">
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Válido para as 10 primeiras pessoas que fecharem em novembro.</li>
-                  <li>
-                    Voucher válido por 30 dias para marcação (não precisa consumir
-                    dentro desse prazo, apenas agendar).
-                  </li>
-                  <li>
-                    É necessário deixar um sinal de 20% para garantir sua vaga e os
-                    benefícios.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <Button
-            type="button"
-            onClick={handleWhatsappClick}
-            className="w-full sm:w-auto rounded-full bg-emerald-500 text-white text-base font-semibold px-8 py-3 shadow-lg hover:bg-emerald-600 transition-colors"
-          >
-            Quero meu dia de princesa
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Seção de perguntas frequentes */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 flex items-center justify-center rounded-full bg-[var(--primary-purple)]/10 text-[var(--primary-purple)]">
-            <HelpCircle className="h-4 w-4" />
-          </div>
-          <div>
-            <h3 className="text-lg sm:text-xl font-semibold text-zinc-900">
-              Perguntas frequentes
-            </h3>
-            <p className="text-sm text-zinc-700">
-              Veja as dúvidas mais comuns antes de agendar seu Dia de Estrela,
-              Rainha ou Diva.
-            </p>
-          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+            Dúvidas que toda bellinha tem
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-base text-gray-600 sm:text-lg">
+            Respostas com carinho para que você se sinta segura e acolhida
+          </p>
         </div>
 
-        <div className="space-y-3">
-          {FAQ_ITEMS.map((item: FaqItem, index: number) => (
+        <div className="mt-10 space-y-5">
+          {faqData.map((item, index) => (
             <Card
               key={index}
-              className="border-[var(--primary-purple)]/15 bg-white/80 shadow-sm hover:shadow-md transition-shadow"
+              className={`overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md ${
+                openIndex === index ? "border-purple-300" : ""
+              }`}
             >
-              <CardContent className="p-3 sm:p-4">
-                <details className="group">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
-                    <span className="text-sm sm:text-base font-medium text-zinc-900 text-left">
-                      {item.question}
-                    </span>
-                    <span className="shrink-0 flex items-center gap-1 text-[11px] text-[var(--primary-purple)]">
-                      <span className="group-open:hidden">Ver resposta</span>
-                      <span className="hidden group-open:inline">Fechar</span>
-                      <ChevronDown
-                        className="h-3 w-3 transition-transform group-open:rotate-180"
-                      />
-                    </span>
-                  </summary>
-                  <div className="mt-2 text-sm leading-relaxed text-zinc-700">
-                    {item.answer}
-                  </div>
-                </details>
-              </CardContent>
+              <button
+                onClick={() => toggleItem(index)}
+                className="flex w-full items-center justify-between gap-4 p-5 text-left sm:p-6"
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
+              >
+                <span className="text-lg font-semibold text-gray-900 sm:text-xl">
+                  {item.question}
+                </span>
+                <div
+                  className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-purple-100 text-purple-600 transition-all duration-300 sm:h-10 sm:w-10 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
+                >
+                  <ChevronDown className="h-5 w-5" />
+                </div>
+              </button>
+
+              <div
+                id={`faq-answer-${index}`}
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === index ? "max-h-[500px]" : "max-h-0"
+                }`}
+              >
+                <div className="px-5 pb-6 pt-0 sm:px-6">{item.answer}</div>
+              </div>
             </Card>
           ))}
         </div>
-      </section>
 
-      {/* CTA final, para manter o mesmo fluxo da SpaDaySection */}
-      <section className="pt-4 border-t border-[var(--primary-purple)]/10">
-        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <p className="text-sm leading-relaxed text-zinc-700">
-            Se ainda ficou alguma dúvida depois de ler o FAQ, a equipe está
-            pronta para te ajudar no WhatsApp.
+        <div className="mt-10 rounded-2xl border border-purple-200 bg-white p-6 text-center sm:p-8">
+          <Gift className="mx-auto mb-4 h-12 w-12 text-purple-500 sm:h-14 sm:w-14" />
+          <h3 className="text-xl font-semibold text-gray-900 sm:text-2xl">
+            Ainda tem alguma dúvida especial?
+          </h3>
+          <p className="mx-auto mt-2 max-w-md text-base text-gray-600 sm:text-lg">
+            Nossa equipe está aqui para te acolher e responder com todo carinho do mundo
           </p>
           <Button
-            type="button"
-            onClick={handleWhatsappClick}
-            className="w-full sm:w-auto rounded-full bg-emerald-500 text-white text-sm font-semibold px-6 py-3 shadow-lg hover:bg-emerald-600/90 transition-colors"
+            variant="outline"
+            className="mt-4 rounded-full bg-purple-600 px-6 py-3 text-base text-white hover:bg-purple-700 sm:mt-6 sm:px-8"
+            onClick={() => window.open("https://wa.me/5511976820135?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Spa%20Day", "_blank")}
           >
-            Tirar dúvidas no WhatsApp
+            <MessageCircle className="mr-2 h-5 w-5" />
+            Falar no WhatsApp
           </Button>
         </div>
-      </section>
+      </div>
     </section>
   );
 }

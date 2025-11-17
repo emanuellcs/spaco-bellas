@@ -1,124 +1,57 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { ChevronLeft, ChevronRight, Sparkles, Quote } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-// Depoimentos reais focados na experiência emocional do Spa Day das Celebridades
-const testimonials = [
-  {
-    id: "1",
-    customerName: "Dra Patricia Rodrigues Santos",
-    content: "Espaço super aconchegante onde você encontra de tudo 🤩 Estética Facial e Corporal, Unhas 💅🏻 cílios, sobrancelhas, cabelo, terapia…. Super bem atendida do inicio ao fim!",
-    service: "Dia de Rainha",
-    rating: 5,
-    displayOrder: 1,
-  },
-  {
-    id: "2",
-    customerName: "Neide Ferreira Moreira",
-    content: "Amei, fui muito bem acolhida, todos procedimentos sao realizados com carinho e muita empatia",
-    service: "Dia de Diva",
-    rating: 5,
-    displayOrder: 2,
-  },
-  {
-    id: "3",
-    customerName: "Ivanete Ferraz",
-    content: "Um espaço maravilhoso e completo, ótimo para você fugir da rotina do dia a dia, com ótimos profissionais e um excelente atendimento,vale apena conhecer.",
-    service: "Dia de Estrela",
-    rating: 5,
-    displayOrder: 3,
-  },
-  {
-    id: "4",
-    customerName: "Viviane Olyver Pereira",
-    content: "Um espaço cheio de energia positiva, Muito bom o atendimento.Profissionais comprometidos e muito educados! Fui superbem atendida. Parabéns!",
-    service: "Dia de Rainha",
-    rating: 5,
-    displayOrder: 4,
-  },
-  {
-    id: "5",
-    customerName: "Alexsandra Camila",
-    content: "Lugar incrivel, maravilhoso o atendimento e os procedimentos, super recomendo, profissionais excelentes.",
-    service: "Dia de Diva",
-    rating: 5,
-    displayOrder: 5,
-  },
-  {
-    id: "6",
-    customerName: "Carlitos Mota",
-    content: "Espaço maravilhoso,minha esposa adorou, super recomendo",
-    service: "Dia de Diva",
-    rating: 5,
-    displayOrder: 6,
-  },
-  {
-    id: "7",
-    customerName: "Vanessa Amaral Da Silva",
-    content: "Organizado , acolhedor e excelentes profissionais um lugar completo.",
-    service: "Dia de Estrela",
-    rating: 5,
-    displayOrder: 7,
-  },
-  {
-    id: "8",
-    customerName: "Daiane Silva",
-    content: "Espaço maravilhoso, ótimo atendimento.",
-    service: "Dia de Rainha",
-    rating: 5,
-    displayOrder: 8,
-  },
+import depoimento01 from "./depoimentos/depoimento-01.png";
+import depoimento02 from "./depoimentos/depoimento-02.png";
+import depoimento03 from "./depoimentos/depoimento-03.png";
+import depoimento04 from "./depoimentos/depoimento-04.png";
+import depoimento05 from "./depoimentos/depoimento-05.png";
+import depoimento06 from "./depoimentos/depoimento-06.png";
+import depoimento07 from "./depoimentos/depoimento-07.png";
+import depoimento08 from "./depoimentos/depoimento-08.png";
+
+type Testimonial = {
+  id: string;
+  displayOrder: number;
+  imageSrc: string;
+  imageAlt: string;
+};
+
+const testimonials: Testimonial[] = [
+  { id: "1", displayOrder: 1, imageSrc: depoimento01, imageAlt: "Screenshot de depoimento 1" },
+  { id: "2", displayOrder: 2, imageSrc: depoimento02, imageAlt: "Screenshot de depoimento 2" },
+  { id: "3", displayOrder: 3, imageSrc: depoimento03, imageAlt: "Screenshot de depoimento 3" },
+  { id: "4", displayOrder: 4, imageSrc: depoimento04, imageAlt: "Screenshot de depoimento 4" },
+  { id: "5", displayOrder: 5, imageSrc: depoimento05, imageAlt: "Screenshot de depoimento 5" },
+  { id: "6", displayOrder: 6, imageSrc: depoimento06, imageAlt: "Screenshot de depoimento 6" },
+  { id: "7", displayOrder: 7, imageSrc: depoimento07, imageAlt: "Screenshot de depoimento 7" },
+  { id: "8", displayOrder: 8, imageSrc: depoimento08, imageAlt: "Screenshot de depoimento 8" },
 ];
 
 export function TestimonialsSection() {
-  const [isVisible, setIsVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout>();
+  const [isMobile, setIsMobile] = useState(true);
+
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Auto-play carousel
   useEffect(() => {
     if (isAutoPlaying) {
       autoPlayRef.current = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % testimonials.length);
       }, 5000);
     }
-
     return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
-      }
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
   }, [isAutoPlaying]);
 
@@ -137,188 +70,110 @@ export function TestimonialsSection() {
     setCurrentIndex(index);
   };
 
-  // Get visible testimonials (1 on mobile, 3 on desktop)
-  const getVisibleTestimonials = () => {
-    const visible = [];
+  const getVisible = () => {
     const count = isMobile ? 1 : 3;
+    const visible: Testimonial[] = [];
     for (let i = 0; i < count; i++) {
-      const index = (currentIndex + i) % testimonials.length;
-      visible.push(testimonials[index]);
+      visible.push(testimonials[(currentIndex + i) % testimonials.length]);
     }
     return visible;
   };
 
   return (
     <section
-      id="testimonials"
-      ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-b overflow-hidden"
-      style={{backgroundColor: "#F6EDF9"}}
+      id="depoimentos"
+      className="relative overflow-hidden bg-white py-24 sm:py-28 lg:py-32"
     >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200 rounded-full filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200 rounded-full filter blur-3xl opacity-20 translate-x-1/2 translate-y-1/2" />
+      {/* Elementos decorativos sutis */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -left-24 top-8 h-72 w-72 rounded-full bg-purple-300/10 blur-3xl" />
+        <div className="absolute -right-24 bottom-8 h-72 w-72 rounded-full bg-pink-300/10 blur-3xl" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 bg-purple-100 rounded-full px-4 sm:px-6 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-[var(--primary-purple)]" />
-            <span className="text-sm font-medium text-[var(--primary-purple)]">
-              Depoimentos
-            </span>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Cabeçalho com margem aumentada */}
+        <div className="text-center mb-16 sm:mb-20 lg:mb-24">
+          <div className="inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-4 py-1 text-sm font-medium uppercase tracking-[0.2em] text-purple-600 sm:text-base">
+            <Sparkles className="h-4 w-4" />
+            Depoimentos reais
           </div>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 md:mb-6 px-4">
-            Histórias de Transformação
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+            Sorrisos que contam a nossa história
           </h2>
-
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-            Veja o que nossas clientes dizem sobre o Spa Day das Celebridades e como essa experiência transformou seus dias
+          <p className="mx-auto mt-2 max-w-2xl text-base text-gray-600 sm:text-lg">
+            Registros reais — com a mesma energia e carinho do Spa Day
           </p>
         </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          {/* Navigation buttons - Mobile: Inside cards, Desktop: Outside */}
-          <div className="md:flex hidden absolute top-1/2 -translate-y-1/2 left-0 right-0 justify-between pointer-events-none z-10">
-            <Button
-              onClick={goToPrevious}
-              variant="outline"
-              size="icon"
-              className="pointer-events-auto -ml-4 bg-white/90 hover:bg-white shadow-xl border-2 border-purple-100"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-            <Button
-              onClick={goToNext}
-              variant="outline"
-              size="icon"
-              className="pointer-events-auto -mr-4 bg-white/90 hover:bg-white shadow-xl border-2 border-purple-100"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
+        {/* Carrossel com setas ao lado (sempre visíveis) */}
+        <div className="mt-12 flex items-center justify-between gap-2 sm:gap-3 lg:justify-center lg:gap-4">
+          {/* Botão anterior (sempre visível) */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToPrevious}
+            aria-label="Anterior"
+            className="rounded-full border-purple-200 bg-white text-purple-600 shadow-sm hover:bg-purple-50"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
 
-          {/* Testimonials grid */}
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
-            {getVisibleTestimonials().map((testimonial, index) => (
-              <Card
-                key={testimonial.id}
-                className={`relative overflow-hidden border-2 border-purple-100 hover:border-[var(--primary-purple)] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-white ${
-                  isVisible ? "animate-fade-in-up" : "opacity-0"
-                }`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <CardContent className="p-6 sm:p-8 relative z-10">
-                  {/* Glass effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Quote icon */}
-                  <Quote className="w-8 sm:w-10 h-8 sm:h-10 text-[var(--primary-purple)]/20 mb-4" />
-
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-3 h-3 sm:w-4 sm:h-4 fill-[var(--primary-purple)] text-[var(--primary-purple)]"
-                      />
-                    ))}
+          {/* Grid de imagens em modo paisagem */}
+          <div className="flex-1 max-w-6xl">
+            <div className="grid grid-cols-1 place-items-center gap-6 lg:grid-cols-3 lg:gap-8">
+              {getVisible().map((item) => (
+                <Card
+                  key={item.id}
+                  className="group relative w-full overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-200 hover:shadow-2xl"
+                >
+                  {/* Container 16:9 para modo paisagem */}
+                  <div className="relative w-full overflow-hidden bg-white">
+                    <div className="block pt-[56.25%]" /> {/* 16:9 aspect ratio */}
+                    <img
+                      src={item.imageSrc}
+                      alt={item.imageAlt}
+                      className="absolute inset-0 h-full w-full object-contain"
+                      draggable={false}
+                    />
                   </div>
 
-                  {/* Content */}
-                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-6 relative z-10 min-h-[160px] sm:min-h-[180px]">
-                    "{testimonial.content}"
-                  </p>
-
-                  {/* Customer info */}
-                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                    {/* Avatar */}
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[var(--primary-purple)] to-pink-500 flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0">
-                      {testimonial.customerName
-                        .split(" ")
-                        .map((n) => n[0])
-                        .slice(0, 2)
-                        .join("")}
-                    </div>
-
-                    <div>
-                      <div className="font-bold text-gray-900 text-sm sm:text-base">
-                        {testimonial.customerName}
-                      </div>
-                      <div className="text-xs sm:text-sm text-[var(--primary-purple)]">
-                        {testimonial.service}
-                      </div>
+                  {/* Citação decorativa no canto */}
+                  <div className="pointer-events-none absolute right-4 top-4">
+                    <div className="rounded-full bg-purple-100/80 p-2 backdrop-blur">
+                      <Quote className="h-5 w-5 text-purple-600" />
                     </div>
                   </div>
-
-                  {/* Hover gradient */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-[var(--primary-purple)]/30 rounded-lg transition-colors duration-300 pointer-events-none" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Mobile navigation buttons */}
-          <div className="flex md:hidden justify-center gap-4 mb-8">
-            <Button
-              onClick={goToPrevious}
-              variant="outline"
-              size="icon"
-              className="bg-white shadow-lg border-2 border-purple-100"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-            <Button
-              onClick={goToNext}
-              variant="outline"
-              size="icon"
-              className="bg-white shadow-lg border-2 border-purple-100"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
-
-          {/* Dots navigation */}
-          <div className="flex justify-center gap-2 mb-8 md:mb-12">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? "w-8 bg-[var(--primary-purple)]"
-                    : "w-2 bg-[var(--primary-purple)]/30 hover:bg-[var(--primary-purple)]/50"
-                }`}
-                aria-label={`Ir para depoimento ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-2xl mx-auto px-4">
-          <Card className="p-6 sm:p-8 text-center border-2 border-purple-100 bg-gradient-to-br from-white to-purple-50/30">
-            <div className="flex justify-center gap-1 mb-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-5 h-5 sm:w-6 sm:h-6 fill-[var(--primary-purple)] text-[var(--primary-purple)]"
-                />
+                </Card>
               ))}
             </div>
-            <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-              4.9<span className="text-xl sm:text-2xl text-gray-600">/5</span>
-            </div>
-            <div className="text-sm sm:text-base text-gray-600">Avaliação Média</div>
-          </Card>
+          </div>
 
-          <Card className="p-6 sm:p-8 text-center border-2 border-purple-100 bg-gradient-to-br from-white to-pink-50/30">
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-[var(--primary-purple)] mx-auto mb-4" />
-            <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">2.500+</div>
-            <div className="text-sm sm:text-base text-gray-600">Clientes Satisfeitas</div>
-          </Card>
+          {/* Botão próximo (sempre visível) */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToNext}
+            aria-label="Próximo"
+            className="rounded-full border-purple-200 bg-white text-purple-600 shadow-sm hover:bg-purple-50"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
+        </div>
+
+        {/* Dots de navegação */}
+        <div className="mt-10 flex items-center justify-center gap-2">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              aria-label={`Ir para slide ${index + 1}`}
+              className={`h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? "w-10 bg-purple-600"
+                  : "w-3 bg-purple-300 hover:bg-purple-400"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

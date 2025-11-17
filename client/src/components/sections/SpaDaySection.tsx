@@ -132,6 +132,20 @@ export function SpaDaySection() {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200 rounded-full filter blur-3xl opacity-20 translate-x-12 translate-y-12" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Cabeçalho da seção */}
+        <div className="text-center mb-14 sm:mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-4 py-1 text-sm font-medium uppercase tracking-[0.2em] text-purple-600 sm:text-base">
+            <Sparkles className="h-4 w-4" />
+            Pacotes especiais
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+            Escolha o seu dia perfeito
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-base text-gray-600 sm:text-lg">
+            Cada experiência foi cuidadosamente pensada para transformar seu momento em algo inesquecível
+          </p>
+        </div>
+
         {/* Packages grid */}
         <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-4 mb-20 md:mb-24">
           {packages.map((pkg, index) => {

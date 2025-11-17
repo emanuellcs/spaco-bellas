@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles, ChevronDown } from "lucide-react";
+import { Sparkles, ChevronDown, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import heroImage from "@assets/generated_images/herodayspa.png";
 
@@ -41,41 +41,36 @@ export function HeroSpaDay() {
         >
           {/* Coluna central limitada para leitura confortável */}
           <div className="space-y-6 sm:space-y-8 max-w-3xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 sm:px-6 py-2 sm:py-3 text-white text-sm sm:text-base">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-var--primary-purple" />
-              <span className="font-medium">Spa Day das Celebridades</span>
-            </div>
 
             {/* Heading */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Viva um dia de princesa
-              <br className="hidden md:block" />
-              com banheira, massagem e cuidados de celebridade
-              <br className="hidden md:block" />
-              sem sair de São Paulo
+              Seu dia de rainha começa aqui
             </h1>
 
             {/* Subtítulo */}
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-              Transforme o cansaço em brilho com o novo Spa das Celebridades — pacotes
-              exclusivos para mulheres que merecem um recomeço.
+              Pacotes exclusivos para mulheres que querem se sentir poderosas, renovadas e cuidadas como celebridades
             </p>
 
             {/* CTA principal */}
-            <div className="pt-4 sm:pt-6 flex justify-center">
+            <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
               <Button
-                onClick={() =>
-                  window.open(
-                    `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`,
-                    "_blank"
-                  )
-                }
-                className="bg-[var(--primary-purple)] hover:bg-[var(--primary-purple)]/90 text-white font-medium px-6 sm:px-8 py-4 sm:py-5 text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 size="lg"
+                className="w-full rounded-full bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-5 text-base font-semibold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:from-purple-700 hover:to-purple-800 hover:shadow-2xl sm:w-auto sm:px-8 sm:py-6"
+                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, "_blank")}
               >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Quero viver minha experiência
+                <Heart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Quero meu Spa Day
+              </Button>
+
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full rounded-full border-2 border-white bg-white/10 px-6 py-5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20 sm:w-auto sm:px-8 sm:py-6"
+                onClick={() => document.getElementById("spa-day")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Ver pacotes
               </Button>
             </div>
           </div>
